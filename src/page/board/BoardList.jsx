@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function BoardList() {
+  const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
   // const boardList = [
   //   { id: 5, title: "title1", writer: "who1" },
@@ -28,13 +30,17 @@ export function BoardList() {
               <Th>제목</Th>
               <Th>
                 <FontAwesomeIcon icon={faUserPen} />
-                작성자
               </Th>
             </Tr>
           </Thead>
           <Tbody>
             {boardList.map((board) => (
-              <Tr key={board.id}>
+              <Tr
+                cursor={"pointer"}
+                _hover={{ bgColor: "gray.200" }}
+                onClick={() => navigate(`/board/${board.id}`)}
+                key={board.id}
+              >
                 <Td>{board.id}</Td>
                 <Td>{board.title}</Td>
                 <Td>{board.writer}</Td>
