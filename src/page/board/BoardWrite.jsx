@@ -29,25 +29,19 @@ export function BoardWrite() {
         <Box>
           <FormControl>
             <FormLabel>제목</FormLabel>
-            <Input name={"title"} onChange={(e) => setTitle(e.target.value)} />
+            <Input onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
-            <Textarea
-              name={"content"}
-              onChange={(e) => setContent(e.target.value)}
-            />
+            <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
-            <Input
-              name={"writer"}
-              onChange={(e) => setWriter(e.target.value)}
-            />
+            <Input onChange={(e) => setWriter(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
