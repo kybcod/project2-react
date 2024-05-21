@@ -20,7 +20,7 @@ export function BoardEdit() {
   }, []);
 
   function handleClickSave() {
-    axios.put("/api/board/edit", board).then((res) => res.data);
+    axios.put("/api/board/edit", board);
   }
 
   if (board === null) {
