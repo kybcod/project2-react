@@ -34,8 +34,31 @@ export function BoardWrite() {
         });
         navigate("/");
       })
-      .catch()
+      .catch((error) => {
+        const code = error.response.status;
+
+        if (code === 400) {
+          toast({
+            status: "error",
+            description: "등록되지 않았습니다. 입력한 내용을 확인해주세요.",
+            position: "top-right",
+            duration: 1000,
+          });
+        }
+      })
       .finally();
+  }
+
+  // 제목, 본문, 작성자 작성하지 않으면 활성화가 되지 않는다.
+  let disableSaveButton = false;
+  if (title.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (content.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (writer.trim().length === 0) {
+    disableSaveButton = true;
   }
 
   return (
@@ -61,7 +84,11 @@ export function BoardWrite() {
           </FormControl>
         </Box>
         <Box>
-          <Button colorScheme={"blue"} onClick={handleSaveClick}>
+          <Button
+            isDisabled={disableSaveButton}
+            colorScheme={"blue"}
+            onClick={handleSaveClick}
+          >
             저장
           </Button>
         </Box>
