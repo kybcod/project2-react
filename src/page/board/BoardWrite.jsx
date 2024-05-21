@@ -17,8 +17,10 @@ export function BoardWrite() {
   const [writer, setWriter] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   function handleSaveClick() {
+    setLoading(true);
     axios
       .post("/api/board/add", {
         title,
@@ -46,7 +48,7 @@ export function BoardWrite() {
           });
         }
       })
-      .finally();
+      .finally(() => setLoading(false));
   }
 
   // 제목, 본문, 작성자 작성하지 않으면 활성화가 되지 않는다.
@@ -85,6 +87,7 @@ export function BoardWrite() {
         </Box>
         <Box>
           <Button
+            isLoading={loading}
             isDisabled={disableSaveButton}
             colorScheme={"blue"}
             onClick={handleSaveClick}
