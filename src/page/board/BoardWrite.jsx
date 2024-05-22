@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Textarea,
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -68,7 +69,7 @@ export function BoardWrite() {
         <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
-            <Input onChange={(e) => setContent(e.target.value)} />
+            <Textarea onChange={(e) => setContent(e.target.value)}></Textarea>
           </FormControl>
         </Box>
         <Box>
