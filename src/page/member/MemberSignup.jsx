@@ -70,26 +70,47 @@ export function MemberSignup() {
   function handleCheckEmail() {
     axios
       .get(`/api/member/check?email=${email}`)
-      .then((response) => {
+      .then((res) => {
         toast({
           status: "warning",
-          description: "중복된 이메일입니다.",
+          description: "사용할 수 없는 이메일입니다.",
           position: "top-right",
-          duration: 1000,
         });
-      }) // 이미 있는 이메일(사용 못함)
+      }) // 이미 있는 이메일 (사용 못함)
       .catch((err) => {
-        if (err.response.status === 400) {
+        if (err.response.status === 404) {
           // 사용할 수 있는 이메일
           toast({
             status: "info",
             description: "사용할 수 있는 이메일입니다.",
             position: "top-right",
-            duration: 1000,
           });
         }
       })
       .finally();
+  }
+
+  function handleCheckNickName() {
+    axios
+      .get(`/api/member/check?nickName=${nickName}`)
+      .then(() => {
+        toast({
+          status: "warning",
+          description: "중복된 별명입니다.",
+          position: "top-right",
+          duration: 1000,
+        });
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast({
+            status: "info",
+            description: "사용할 수 있는 닉네임입니다.",
+            position: "top-right",
+            duration: 1000,
+          });
+        }
+      });
   }
 
   return (
@@ -121,12 +142,12 @@ export function MemberSignup() {
         </Box>
         <Box>
           <FormControl>
-            <FormLabel>별명</FormLabel>
+            <FormLabel>닉네임</FormLabel>
             <InputGroup>
               <Input onChange={(e) => setNickName(e.target.value)} />
               <InputRightElement w={"100px"} mr={1}>
                 <Button
-                  onClick={handleCheckEmail}
+                  onClick={handleCheckNickName}
                   size={"sm"}
                   colorScheme={"green"}
                 >
