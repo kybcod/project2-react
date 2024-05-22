@@ -74,7 +74,8 @@ export function MemberSignup() {
         toast({
           status: "warning",
           description: "사용할 수 없는 이메일입니다.",
-          position: "top-right",
+          position: "top",
+          duration: 1000,
         });
       }) // 이미 있는 이메일 (사용 못함)
       .catch((err) => {
@@ -83,7 +84,8 @@ export function MemberSignup() {
           toast({
             status: "info",
             description: "사용할 수 있는 이메일입니다.",
-            position: "top-right",
+            position: "top",
+            duration: 1000,
           });
         }
       })
@@ -93,11 +95,11 @@ export function MemberSignup() {
   function handleCheckNickName() {
     axios
       .get(`/api/member/check?nickName=${nickName}`)
-      .then(() => {
+      .then((res) => {
         toast({
           status: "warning",
-          description: "중복된 별명입니다.",
-          position: "top-right",
+          description: "중복된 닉네임입니다.",
+          position: "top",
           duration: 1000,
         });
       })
@@ -106,7 +108,7 @@ export function MemberSignup() {
           toast({
             status: "info",
             description: "사용할 수 있는 닉네임입니다.",
-            position: "top-right",
+            position: "top",
             duration: 1000,
           });
         }
