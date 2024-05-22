@@ -96,7 +96,7 @@ export function BoardView() {
         </FormControl>
       </Box>
       <Box>
-        <Button>수정</Button>
+        <Button onClick={() => navigate(`/edit/${board.id}`)}>수정</Button>
         <Button onClick={onOpen}>삭제</Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
