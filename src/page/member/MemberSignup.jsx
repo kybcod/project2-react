@@ -23,6 +23,7 @@ export function MemberSignup() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   function handleMemberSaveClick() {
     setIsLoading(true);
@@ -127,6 +128,10 @@ export function MemberSignup() {
     isDisabled = true;
   }
 
+  if (!isValidEmail) {
+    isDisabled = true;
+  }
+
   const isCheckPassword = password === passwordCheck;
 
   return (
@@ -138,13 +143,16 @@ export function MemberSignup() {
             <FormLabel>이메일</FormLabel>
             <InputGroup>
               <Input
+                type={"email"}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   setIsCheckedEmail(false);
+                  setIsValidEmail(!e.target.validity.typeMismatch);
                 }}
               />
               <InputRightElement w={"100px"} mr={1}>
                 <Button
+                  isDisabled={!isValidEmail || email.trim().length === 0}
                   onClick={handleCheckEmail}
                   size={"sm"}
                   colorScheme={"green"}
@@ -157,6 +165,9 @@ export function MemberSignup() {
               <FormHelperText color={"blue"}>
                 이메일 중복확인 해주세요.
               </FormHelperText>
+            )}
+            {isValidEmail || (
+              <FormHelperText>올바른 이메일 형식이 아닙니다. </FormHelperText>
             )}
           </FormControl>
         </Box>
@@ -189,6 +200,7 @@ export function MemberSignup() {
               />
               <InputRightElement w={"100px"} mr={1}>
                 <Button
+                  isDisabled={nickName.trim().length === 0}
                   onClick={handleCheckNickName}
                   size={"sm"}
                   colorScheme={"green"}
