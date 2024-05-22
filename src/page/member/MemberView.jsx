@@ -24,6 +24,7 @@ export function MemberView() {
   const { id } = useParams();
   const [member, setMember] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -53,11 +54,11 @@ export function MemberView() {
   function handleDeleteClick() {
     setIsLoading(true);
     axios
-      .delete(`/api/member/${id}`)
+      .delete(`/api/member/${id}`, { data: { id, password } })
       .then((res) => {
         toast({
           status: "success",
-          description: `${member.id}님dl 탈퇴하였습니다. `,
+          description: `${member.id}님이 탈퇴하였습니다. `,
           position: "top-right",
           duration: 1000,
         });
@@ -71,7 +72,11 @@ export function MemberView() {
           duration: 1000,
         });
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        setPassword("");
+        onClose();
+      });
   }
 
   return (
@@ -99,7 +104,7 @@ export function MemberView() {
       <Box>
         <Button colorScheme={"green"}>수정</Button>
         <Button onClick={onOpen} colorScheme={"red"}>
-          삭제
+          탈퇴
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -108,7 +113,12 @@ export function MemberView() {
               <FontAwesomeIcon icon={faTriangleExclamation} />
               경고
             </ModalHeader>
-            <ModalBody>정말로 탈퇴하시겠습니까?</ModalBody>
+            <ModalBody>
+              <FormControl>
+                <FormLabel>암호</FormLabel>
+                <Input onChange={(e) => setPassword(e.target.value)} />
+              </FormControl>
+            </ModalBody>
             <ModalFooter>
               <Button
                 isLoading={isLoading}
