@@ -44,7 +44,7 @@ export function MemberList() {
                 key={member.id}
                 cursor={"pointer"}
                 _hover={{ bgColor: "gray.200" }}
-                // onClick={() => navigate(`/member/list${member.id}`)}
+                onClick={() => navigate(`/member/${member.id}`)}
               >
                 <Td>{member.id}</Td>
                 <Td>{member.email}</Td>
