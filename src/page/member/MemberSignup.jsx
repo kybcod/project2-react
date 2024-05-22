@@ -108,14 +108,17 @@ export function MemberSignup() {
           });
           setIsCheckedNickName(true);
         }
-      });
+      })
+      .finally();
   }
 
   let isDisabled = false;
   if (
-    email.trim().length === 0 ||
-    password.trim().length === 0 ||
-    nickName.trim().length === 0
+    !(
+      email.trim().length > 0 &&
+      password.trim().length > 0 &&
+      nickName.trim().length > 0
+    )
   ) {
     isDisabled = true;
   }
