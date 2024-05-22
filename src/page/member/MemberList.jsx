@@ -35,7 +35,7 @@ export function MemberList() {
               <Th>No</Th>
               <Th>이메일</Th>
               <Th>닉네임</Th>
-              <Th>날짜</Th>
+              <Th>가입일시</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -49,7 +49,7 @@ export function MemberList() {
                 <Td>{member.id}</Td>
                 <Td>{member.email}</Td>
                 <Td>{member.nickName}</Td>
-                <Td>{member.inserted}</Td>
+                <Td>{member.signupDateAndTime}</Td>
               </Tr>
             ))}
           </Tbody>
