@@ -21,6 +21,8 @@ export function MemberSignup() {
   const toast = useToast();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckedEmail, setIsCheckedEmail] = useState(false);
+  const [isCheckedNickName, setIsCheckedNickName] = useState(false);
 
   function handleMemberSaveClick() {
     setIsLoading(true);
@@ -78,6 +80,7 @@ export function MemberSignup() {
             position: "top",
             duration: 1000,
           });
+          setIsCheckedEmail(true);
         }
       })
       .finally();
@@ -102,6 +105,7 @@ export function MemberSignup() {
             position: "top",
             duration: 1000,
           });
+          setIsCheckedNickName(true);
         }
       });
   }
@@ -115,6 +119,14 @@ export function MemberSignup() {
     isDisabled = true;
   }
 
+  if (!isCheckedEmail) {
+    isDisabled = true;
+  }
+
+  if (!isCheckedNickName) {
+    isDisabled = true;
+  }
+
   const isCheckPassword = password === passwordCheck;
 
   return (
@@ -125,7 +137,12 @@ export function MemberSignup() {
           <FormControl>
             <FormLabel>이메일</FormLabel>
             <InputGroup>
-              <Input onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setIsCheckedEmail(false);
+                }}
+              />
               <InputRightElement w={"100px"} mr={1}>
                 <Button
                   onClick={handleCheckEmail}
@@ -136,6 +153,11 @@ export function MemberSignup() {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            {isCheckedEmail || (
+              <FormHelperText color={"blue"}>
+                이메일 중복확인 해주세요.
+              </FormHelperText>
+            )}
           </FormControl>
         </Box>
         <Box>
@@ -159,7 +181,12 @@ export function MemberSignup() {
           <FormControl>
             <FormLabel>닉네임</FormLabel>
             <InputGroup>
-              <Input onChange={(e) => setNickName(e.target.value)} />
+              <Input
+                onChange={(e) => {
+                  setNickName(e.target.value);
+                  setIsCheckedNickName(false);
+                }}
+              />
               <InputRightElement w={"100px"} mr={1}>
                 <Button
                   onClick={handleCheckNickName}
@@ -170,6 +197,11 @@ export function MemberSignup() {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            {isCheckedNickName || (
+              <FormHelperText color={"blue"}>
+                닉네임 중복확인 해주세요.
+              </FormHelperText>
+            )}
           </FormControl>
         </Box>
         <Box>
