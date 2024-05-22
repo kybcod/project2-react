@@ -21,7 +21,7 @@ export function BoardWrite() {
   function handleSaveClick() {
     setLoading(true);
     axios
-      .post("/api/board/add", { title, content, writer })
+      .post("/api/board/insert", { title, content, writer })
       .then(() => {
         toast({
           status: "success",
