@@ -4,6 +4,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -65,6 +67,31 @@ export function MemberSignup() {
     isDisabled = true;
   }
 
+  function handleCheckEmail() {
+    axios
+      .get(`/api/member/check?email=${email}`)
+      .then((response) => {
+        toast({
+          status: "warning",
+          description: "중복된 이메일입니다.",
+          position: "top-right",
+          duration: 1000,
+        });
+      }) // 이미 있는 이메일(사용 못함)
+      .catch((err) => {
+        if (err.response.status === 400) {
+          // 사용할 수 있는 이메일
+          toast({
+            status: "info",
+            description: "사용할 수 있는 이메일입니다.",
+            position: "top-right",
+            duration: 1000,
+          });
+        }
+      })
+      .finally();
+  }
+
   return (
     <Box>
       <Box>회원 가입</Box>
@@ -72,7 +99,18 @@ export function MemberSignup() {
         <Box>
           <FormControl>
             <FormLabel>이메일</FormLabel>
-            <Input onChange={(e) => setEmail(e.target.value)} />
+            <InputGroup>
+              <Input onChange={(e) => setEmail(e.target.value)} />
+              <InputRightElement w={"100px"} mr={1}>
+                <Button
+                  onClick={handleCheckEmail}
+                  size={"sm"}
+                  colorScheme={"green"}
+                >
+                  중복 확인
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
         </Box>
         <Box>
@@ -84,7 +122,18 @@ export function MemberSignup() {
         <Box>
           <FormControl>
             <FormLabel>별명</FormLabel>
-            <Input onChange={(e) => setNickName(e.target.value)} />
+            <InputGroup>
+              <Input onChange={(e) => setNickName(e.target.value)} />
+              <InputRightElement w={"100px"} mr={1}>
+                <Button
+                  onClick={handleCheckEmail}
+                  size={"sm"}
+                  colorScheme={"green"}
+                >
+                  중복 확인
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
         </Box>
         <Box>
