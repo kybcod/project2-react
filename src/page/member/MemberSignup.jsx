@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 export function MemberSignup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
   const [nickName, setNickName] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
@@ -54,17 +56,6 @@ export function MemberSignup() {
         }
       })
       .finally(() => setIsLoading(false));
-  }
-
-  let isDisabled = false;
-  if (email.trim().length === 0) {
-    isDisabled = true;
-  }
-  if (password.trim().length === 0) {
-    isDisabled = true;
-  }
-  if (nickName.trim().length === 0) {
-    isDisabled = true;
   }
 
   function handleCheckEmail() {
@@ -115,6 +106,19 @@ export function MemberSignup() {
       });
   }
 
+  let isDisabled = false;
+  if (email.trim().length === 0) {
+    isDisabled = true;
+  }
+  if (password.trim().length === 0) {
+    isDisabled = true;
+  }
+  if (nickName.trim().length === 0) {
+    isDisabled = true;
+  }
+
+  const isCheckPassword = password === passwordCheck;
+
   return (
     <Box>
       <Box>회원 가입</Box>
@@ -140,6 +144,17 @@ export function MemberSignup() {
           <FormControl>
             <FormLabel>패스워드</FormLabel>
             <Input onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
+        </Box>
+        <Box>
+          <FormControl>
+            <FormLabel>패스워드 확인</FormLabel>
+            <Input onChange={(e) => setPasswordCheck(e.target.value)} />
+            {isCheckPassword || (
+              <FormHelperText color={"blue"}>
+                암호가 일치하지 않습니다.
+              </FormHelperText>
+            )}
           </FormControl>
         </Box>
         <Box>
