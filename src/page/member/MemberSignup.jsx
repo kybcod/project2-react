@@ -107,13 +107,11 @@ export function MemberSignup() {
   }
 
   let isDisabled = false;
-  if (email.trim().length === 0) {
-    isDisabled = true;
-  }
-  if (password.trim().length === 0) {
-    isDisabled = true;
-  }
-  if (nickName.trim().length === 0) {
+  if (
+    email.trim().length === 0 ||
+    password.trim().length === 0 ||
+    nickName.trim().length === 0
+  ) {
     isDisabled = true;
   }
 
