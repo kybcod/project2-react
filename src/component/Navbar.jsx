@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react";
 import React from "react";
 
 export function Navbar() {
   const navigate = useNavigate();
   return (
-    <Flex gap={3}>
+    <Flex minWidth="max-content" alignItems="center" gap="3">
       <Box
         onClick={() => navigate("/")}
         cursor={"pointer"}
@@ -34,13 +34,28 @@ export function Navbar() {
       >
         회원목록
       </Box>
-      <Box
-        onClick={() => navigate("/login")}
-        cursor={"pointer"}
-        _hover={{ bgColor: "gray.200" }}
-      >
-        로그인
-      </Box>
+      <Spacer />
+      <ButtonGroup gap="1">
+        <Button
+          onClick={() => navigate("/login")}
+          cursor={"pointer"}
+          _hover={{ bgColor: "gray.200" }}
+          colorScheme="teal"
+        >
+          로그인
+        </Button>
+        <Button
+          onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }}
+          cursor={"pointer"}
+          _hover={{ bgColor: "gray.200" }}
+          colorScheme="teal"
+        >
+          로그아웃
+        </Button>
+      </ButtonGroup>
     </Flex>
   );
 }
