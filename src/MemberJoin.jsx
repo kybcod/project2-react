@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
@@ -93,7 +94,7 @@ export function MemberJoin() {
 
   return (
     <Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>이메일</FormLabel>
           <InputGroup>
@@ -106,19 +107,24 @@ export function MemberJoin() {
           </InputGroup>
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>비밀번호</FormLabel>
           <Input onChange={(e) => setPassword(e.target.value)} />
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>비밀번호 확인</FormLabel>
           <Input onChange={(e) => setPasswordCheck(e.target.value)} />
+          {password === passwordCheck || (
+            <FormHelperText color={"red"}>
+              비밀번호 확인해야 합니다.
+            </FormHelperText>
+          )}
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>닉네임</FormLabel>
           <InputGroup>
