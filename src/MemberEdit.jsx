@@ -15,98 +15,82 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons/faTriangleExclamation";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
-export function MemberInfo() {
+export function MemberEdit() {
+  const [member, setMember] = useState(null);
+  const [oldPassword, setOldPassword] = useState("");
   const { id } = useParams();
-  const [member, setMember] = useState({});
-  const [password, setPassword] = useState("");
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
-  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
+    console.log(id);
     axios
       .get(`/api/member/${id}`)
-      .then((response) => {
-        setMember(response.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 404) {
-          toast({
-            status: "error",
-            description: "해당 회원이 존재하지 않습니다.",
-            position: "top-right",
-            duration: 1000,
-          });
-        }
-      });
-  }, []);
-
-  if (member === null) {
-    return <Spinner />;
-  }
-
-  function handleDeleteClick() {
-    axios
-      .delete(`/api/member/${id}`, { data: { id, password } })
       .then((res) => {
-        toast({
-          status: "success",
-          description: `${member.id}님이 탈퇴하였습니다. `,
-          position: "top-right",
-          duration: 1000,
-        });
-        navigate("/member/list");
+        const member1 = res.data;
+        setMember({ ...member1, password: "" });
       })
       .catch((err) => {
         toast({
           status: "error",
-          description: `회원 탈퇴 중 문제가 발생하였습니다.`,
+          description: "해당 회원이 없습니다.",
           position: "top-right",
           duration: 1000,
         });
-      })
-      .finally(() => {
-        setPassword("");
-        onClose();
+        navigate("/");
       });
+  }, []);
+
+  if (member == null) {
+    <Spinner />;
   }
 
   return (
     <Box>
-      <Box>{member.id}번 게시물</Box>
+      <Box>{member.id}번 회원</Box>
       <Box>
         <FormControl>
           <FormLabel>이메일</FormLabel>
-          <Input value={member.email} readOnly />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>
-          <FormLabel>닉네임</FormLabel>
-          <Input value={member.nickName} readOnly />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>
-          <FormLabel>가입일시</FormLabel>
-          <Input value={member.inserted} readOnly />
+          <Input defaultValue={member.email} readOnly />
         </FormControl>
       </Box>
 
       <Box>
-        <Button
-          onClick={() => navigate(`/member/edit/${member.id}`)}
-          colorScheme={"green"}
-        >
-          수정
-        </Button>
+        <FormControl>
+          <FormLabel>비밀번호</FormLabel>
+          <Input defaultValue={member.password} readOnly />
+        </FormControl>
+      </Box>
+      <Box>
+        <FormControl>
+          <FormLabel>비밀번호 확인</FormLabel>
+          <Input />
+        </FormControl>
+      </Box>
+
+      <Box>
+        <FormControl>
+          <FormLabel>닉네임</FormLabel>
+          <Input defaultValue={member.nickName} />
+        </FormControl>
+      </Box>
+
+      <Box>
+        <FormControl>
+          <FormLabel>가입일시</FormLabel>
+          <Input disabled={true} value={member.inserted} />
+        </FormControl>
+      </Box>
+
+      <Box>
         <Button onClick={onOpen} colorScheme={"red"}>
-          탈퇴
+          수정
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -118,16 +102,11 @@ export function MemberInfo() {
             <ModalBody>
               <FormControl>
                 <FormLabel>암호</FormLabel>
-                <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <Input onChange={(e) => setOldPassword(e.target.value)} />
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme={"red"} onClick={handleDeleteClick}>
-                탈퇴
-              </Button>
+              <Button colorScheme={"red"}>확인</Button>
               <Button colorScheme={"blue"} onClick={onClose}>
                 취소
               </Button>
