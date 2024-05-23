@@ -38,6 +38,7 @@ export function MemberJoin() {
           position: "top-right",
           duration: 1000,
         });
+        navigate("/");
       })
       .catch((err) => {
         if (err.response.status === 400) {
