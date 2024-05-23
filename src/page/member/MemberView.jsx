@@ -67,7 +67,7 @@ export function MemberView() {
       .catch((err) => {
         toast({
           status: "error",
-          description: `회원 탈퇴 중 문제가 발생하였습니다.`,
+          description: `올바른 비밀번호가 아닙니다.`,
           position: "top-right",
           duration: 1000,
         });
@@ -102,7 +102,12 @@ export function MemberView() {
       </Box>
 
       <Box>
-        <Button colorScheme={"green"}>수정</Button>
+        <Button
+          onClick={() => navigate(`/member/edit/${member.id}`)}
+          colorScheme={"green"}
+        >
+          수정
+        </Button>
         <Button onClick={onOpen} colorScheme={"red"}>
           탈퇴
         </Button>
