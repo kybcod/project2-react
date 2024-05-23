@@ -27,7 +27,7 @@ export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [passwordCheck, setPasswordCheck] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [isCheckedNickName, setIsCheckedNickName] = useState(true);
+  const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
   const toast = useToast();
@@ -97,7 +97,7 @@ export function MemberEdit() {
             position: "top",
             duration: 1000,
           });
-          setIsCheckedNickName(true);
+          setIsCheckedNickName(true); // 중복확인하고 사용할 수 있으면 true, 입력을 시작하면 false
         }
       })
       .finally();
@@ -168,9 +168,11 @@ export function MemberEdit() {
           <FormLabel>닉네임</FormLabel>
           <InputGroup>
             <Input
-              onChange={(e) =>
-                setMember({ ...member, nickName: e.target.value.trim() })
-              }
+              onChange={(e) => {
+                const newNickName = e.target.value.trim();
+                setMember({ ...member, nickName: newNickName });
+                setIsCheckedNickName(newNickName !== oldNickName); // 기존 닉네임과 새로운 닉네임이 같지 않을때,입력을 시작할 때 활성화
+              }}
               value={member.nickName}
             />
             <InputRightElement w={"100px"} mr={1}>
