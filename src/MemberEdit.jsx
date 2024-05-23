@@ -27,7 +27,7 @@ export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [passwordCheck, setPasswordCheck] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [isCheckedNickName, setIsCheckedNickName] = useState(false);
+  const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
   const toast = useToast();
@@ -115,8 +115,7 @@ export function MemberEdit() {
     isDisableNickNameCheckButton = true;
   }
 
-  // 중복확인하지 않으면 비활성화
-  if (!isCheckedNickName) {
+  if (isCheckedNickName) {
     isDisableNickNameCheckButton = true;
   }
 
@@ -171,7 +170,7 @@ export function MemberEdit() {
               onChange={(e) => {
                 const newNickName = e.target.value.trim();
                 setMember({ ...member, nickName: newNickName });
-                setIsCheckedNickName(newNickName !== oldNickName); // 기존 닉네임과 새로운 닉네임이 같지 않을때,입력을 시작할 때 활성화
+                setIsCheckedNickName(newNickName === oldNickName); // 기존 닉네임과 새로운 닉네임이 같지 않을때,입력을 시작할 때 활성화
               }}
               value={member.nickName}
             />
