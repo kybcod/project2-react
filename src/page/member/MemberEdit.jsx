@@ -108,28 +108,36 @@ export function MemberEdit() {
     return <Spinner />;
   }
 
-  let isDisableNickNameCheckButton = false;
+  let isDisableNickNameCheckButton = false; // 활성화
+
+  // 새로운 닉네임과 기존 닉네임이 같다면 중복 확인 버튼 비활성화
   if (member.nickName === oldNickName) {
     isDisableNickNameCheckButton = true;
   }
+
+  // 새로운 닉네임을 작성하지 않으면 중복 확인 버튼 비활성화
   if (member.nickName.trim().length === 0) {
     isDisableNickNameCheckButton = true;
   }
 
+  // 닉네임 중복확인 했으면 중복 확인 버튼 비활성화
   if (isCheckedNickName) {
     isDisableNickNameCheckButton = true;
   }
 
-  let isDisableSaveButton = false;
+  let isDisableSaveButton = false; //활성화
 
+  // 비밀번호가 같지 않으면 저장 버튼 비활성화
   if (member.password !== passwordCheck) {
     isDisableSaveButton = true;
   }
 
+  // 작성한 닉네임이 없다면 저장 버튼 비활성화
   if (member.nickName.trim().length === 0) {
     isDisableSaveButton = true;
   }
 
+  // 닉네임 중복을 확인하지 않았다면 비활성화
   if (!isCheckedNickName) {
     isDisableSaveButton = true;
   }
