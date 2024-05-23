@@ -20,6 +20,13 @@ export function Navbar() {
       >
         글쓰기
       </Box>
+      <Box
+        onClick={() => navigate("/member/join")}
+        cursor={"pointer"}
+        _hover={{ bgColor: "gray.200" }}
+      >
+        회원 가입
+      </Box>
     </Flex>
   );
 }
