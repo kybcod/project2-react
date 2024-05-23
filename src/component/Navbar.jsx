@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { LoginContext } from "./LoginProvider.jsx";
 
 export function Navbar() {
   const navigate = useNavigate();
+  const account = useContext(LoginContext);
+
   return (
     <Flex minWidth="max-content" alignItems="center" gap="3">
       <Box
@@ -46,7 +49,7 @@ export function Navbar() {
         </Button>
         <Button
           onClick={() => {
-            localStorage.removeItem("token");
+            account.logout();
             navigate("/login");
           }}
           cursor={"pointer"}
