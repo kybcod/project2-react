@@ -27,7 +27,7 @@ export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [passwordCheck, setPasswordCheck] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [isChenkedNickName, setIsCheckedNickName] = useState(true);
+  const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
   const toast = useToast();
@@ -62,7 +62,7 @@ export function MemberEdit() {
           description: `${member.id}번 게시물이 수정되었습니다.`,
           position: "top-right",
         });
-        navigate(`/board/${member.id}`);
+        navigate(`/member/${member.id}`);
       })
       .catch((err) => {
         if (err.response.status === 400) {
@@ -111,7 +111,11 @@ export function MemberEdit() {
   if (member.nickName === oldNickName) {
     isDisableNickNameCheckButton = true;
   }
-  if (member.nickName.length === 0) {
+  if (member.nickName.trim().length === 0) {
+    isDisableNickNameCheckButton = true;
+  }
+
+  if (!isCheckedNickName) {
     isDisableNickNameCheckButton = true;
   }
 
@@ -183,12 +187,6 @@ export function MemberEdit() {
               닉네임 중복 확인 해야 합니다.
             </FormHelperText>
           }
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>
-          <FormLabel>가입일시</FormLabel>
-          <Input disabled={true} value={member.inserted} readOnly />
         </FormControl>
       </Box>
       <Box>
