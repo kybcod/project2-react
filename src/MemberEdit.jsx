@@ -5,6 +5,14 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   useDisclosure,
   useToast,
@@ -12,9 +20,15 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons/faTriangleExclamation";
 
 export function MemberEdit() {
   const [member, setMember] = useState(null);
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [isChenkedNickName, setIsCheckedNickName] = useState(true);
+  const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
@@ -26,6 +40,7 @@ export function MemberEdit() {
       .then((response) => {
         const member1 = response.data;
         setMember({ ...member1, password: "" });
+        setOldNickName(member1.nickName);
       })
       .catch((err) => {
         toast({
@@ -40,14 +55,74 @@ export function MemberEdit() {
 
   function handleClickSave() {
     axios
-      .put(`/api/member/modify`, member)
-      .then((response) => {})
-      .catch((err) => {})
-      .finally(() => {});
+      .put(`/api/member/modify`, { ...member, oldPassword })
+      .then(() => {
+        toast({
+          status: "success",
+          description: `${member.id}번 게시물이 수정되었습니다.`,
+          position: "top-right",
+        });
+        navigate(`/board/${member.id}`);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          toast({
+            status: "error",
+            description: `회원 정보가 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
+            position: "top-right",
+          });
+        }
+      })
+      .finally(() => {
+        onClose();
+      });
+  }
+
+  function handleCheckNickName() {
+    axios
+      .get(`/api/member/check?nickName=${member.nickName}`)
+      .then((res) => {
+        toast({
+          status: "warning",
+          description: "중복된 닉네임입니다.",
+          position: "top",
+          duration: 1000,
+        });
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast({
+            status: "info",
+            description: "사용할 수 있는 닉네임입니다.",
+            position: "top",
+            duration: 1000,
+          });
+          setIsCheckedNickName(true);
+        }
+      })
+      .finally();
   }
 
   if (member == null) {
     return <Spinner />;
+  }
+
+  let isDisableNickNameCheckButton = false;
+  if (member.nickName === oldNickName) {
+    isDisableNickNameCheckButton = true;
+  }
+  if (member.nickName.length === 0) {
+    isDisableNickNameCheckButton = true;
+  }
+
+  let isDisableSaveButton = false;
+
+  if (member.password !== passwordCheck) {
+    isDisableSaveButton = true;
+  }
+
+  if (member.nickName.trim().length === 0) {
+    isDisableSaveButton = true;
   }
 
   return (
@@ -74,11 +149,40 @@ export function MemberEdit() {
       </Box>
       <Box>
         <FormControl>
+          <FormLabel>비밀번호 확인</FormLabel>
+          <Input onChange={(e) => setPasswordCheck(e.target.value)} />
+          {member.password === passwordCheck || (
+            <FormHelperText color={"red"}>
+              비밀번호가 일지하지 않습니다.
+            </FormHelperText>
+          )}
+        </FormControl>
+      </Box>
+      <Box>
+        <FormControl>
           <FormLabel>닉네임</FormLabel>
-          <Input
-            onChange={(e) => setMember({ ...member, nickName: e.target.value })}
-            value={member.nickName}
-          />
+          <InputGroup>
+            <Input
+              onChange={(e) =>
+                setMember({ ...member, nickName: e.target.value.trim() })
+              }
+              value={member.nickName}
+            />
+            <InputRightElement w={"100px"} mr={1}>
+              <Button
+                isDisabled={isDisableNickNameCheckButton}
+                onClick={handleCheckNickName}
+                colorScheme={"green"}
+              >
+                중복 확인
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          {
+            <FormHelperText color={"red"}>
+              닉네임 중복 확인 해야 합니다.
+            </FormHelperText>
+          }
         </FormControl>
       </Box>
       <Box>
@@ -88,9 +192,34 @@ export function MemberEdit() {
         </FormControl>
       </Box>
       <Box>
-        <Button onClick={handleClickSave} colorScheme={"blue"}>
+        <Button
+          isDisabled={isDisableSaveButton}
+          colorScheme={"blue"}
+          onClick={onOpen}
+        >
           저장
         </Button>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              기존 패스워드 확인
+            </ModalHeader>
+            <ModalBody>
+              <FormControl>
+                <FormLabel>기존 패스워드</FormLabel>
+                <Input onChange={(e) => setOldPassword(e.target.value)} />
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={handleClickSave} colorScheme={"blue"}>
+                확인
+              </Button>
+              <Button onClick={onClose}>취소</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
     </Box>
   );
