@@ -27,6 +27,13 @@ export function Navbar() {
       >
         회원 가입
       </Box>
+      <Box
+        onClick={() => navigate("/member/list")}
+        cursor={"pointer"}
+        _hover={{ bgColor: "gray.200" }}
+      >
+        회원 목록
+      </Box>
     </Flex>
   );
 }
