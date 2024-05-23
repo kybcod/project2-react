@@ -20,6 +20,9 @@ export function MemberJoin() {
   const [nickName, setNickName] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isCheckEmail, setIsCheckEmail] = useState(false);
+  const [isCheckNickName, setIsCheckNickName] = useState(false);
 
   function handleJoin() {
     axios
@@ -66,6 +69,7 @@ export function MemberJoin() {
           position: "top-right",
           duration: 1000,
         });
+        setIsCheckNickName(true);
       })
       .finally();
   }
@@ -88,8 +92,21 @@ export function MemberJoin() {
           position: "top-right",
           duration: 1000,
         });
+        setIsCheckEmail(true);
       })
       .finally();
+  }
+
+  let isDisabled = false;
+
+  if (!isValidEmail) {
+    isDisabled = true;
+  }
+  if (!isCheckEmail) {
+    isDisabled = true;
+  }
+  if (!isCheckNickName) {
+    isDisabled = true;
   }
 
   return (
@@ -98,13 +115,32 @@ export function MemberJoin() {
         <FormControl>
           <FormLabel>이메일</FormLabel>
           <InputGroup>
-            <Input onChange={(e) => setEmail(e.target.value)} />
+            <Input
+              type={"email"}
+              onChange={(e) => {
+                setEmail(e.target.value.trim());
+                setIsCheckEmail(false);
+                setIsValidEmail(!e.target.validity.typeMismatch);
+              }}
+            />
             <InputRightElement w={"100px"}>
-              <Button onClick={handleEmailCheckClick} colorScheme={"green"}>
+              <Button
+                isDisabled={!isValidEmail}
+                onClick={handleEmailCheckClick}
+                colorScheme={"green"}
+              >
                 중복확인
               </Button>
             </InputRightElement>
           </InputGroup>
+          {isCheckEmail || (
+            <FormHelperText color={"blue"}>
+              이메일 중복확인 해주세요.
+            </FormHelperText>
+          )}
+          {isValidEmail || (
+            <FormHelperText>올바른 이메일 형식이 아닙니다. </FormHelperText>
+          )}
         </FormControl>
       </Box>
       <Box mt={"30px"}>
@@ -128,17 +164,33 @@ export function MemberJoin() {
         <FormControl>
           <FormLabel>닉네임</FormLabel>
           <InputGroup>
-            <Input onChange={(e) => setNickName(e.target.value)} />
+            <Input
+              onChange={(e) => {
+                setNickName(e.target.value);
+                setIsCheckNickName(false);
+              }}
+            />
             <InputRightElement w={"100px"}>
-              <Button onClick={handleNickNameCheckClick} colorScheme={"green"}>
+              <Button
+                isDisabled={nickName.trim().length === 0}
+                onClick={handleNickNameCheckClick}
+                colorScheme={"green"}
+              >
                 중복확인
               </Button>
             </InputRightElement>
           </InputGroup>
+          {isCheckNickName || (
+            <FormHelperText>닉네임 중복확인해주세요</FormHelperText>
+          )}
         </FormControl>
       </Box>
       <Box>
-        <Button colorScheme={"blue"} onClick={handleJoin}>
+        <Button
+          isDisabled={isDisabled}
+          colorScheme={"blue"}
+          onClick={handleJoin}
+        >
           가입
         </Button>
       </Box>
