@@ -24,6 +24,7 @@ export function LoginProvider({ children }) {
   }
 
   function logout() {
+    localStorage.removeItem("token");
     setExpired(0);
     setEmail("");
     setNickName("");
