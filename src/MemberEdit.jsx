@@ -26,9 +26,9 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons/faTrian
 export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState(""); //기존 패스워드
+  const [oldNickName, setOldNickName] = useState(""); // 기존 닉네임
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
-  const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
@@ -75,6 +75,7 @@ export function MemberEdit() {
       })
       .finally(() => {
         onClose();
+        setOldPassword("");
       });
   }
 
@@ -126,6 +127,10 @@ export function MemberEdit() {
   }
 
   if (member.nickName.trim().length === 0) {
+    isDisableSaveButton = true;
+  }
+
+  if (!isCheckedNickName) {
     isDisableSaveButton = true;
   }
 
