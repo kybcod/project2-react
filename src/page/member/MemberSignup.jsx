@@ -138,8 +138,7 @@ export function MemberSignup() {
   const isCheckPassword = password === passwordCheck;
 
   return (
-    <Box>
-      <Box>회원 가입</Box>
+    <Box mt={"30px"}>
       <Box>
         <Box>
           <FormControl>

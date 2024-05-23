@@ -27,7 +27,7 @@ export function MemberList() {
   }
 
   return (
-    <Box>
+    <Box mt={"30px"}>
       <Box>
         <Table>
           <Thead>

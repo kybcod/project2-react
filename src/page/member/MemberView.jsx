@@ -80,7 +80,7 @@ export function MemberView() {
   }
 
   return (
-    <Box>
+    <Box mt={"30px"}>
       <Box>{member.id}번 회원</Box>
       <Box>
         <FormControl>

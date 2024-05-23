@@ -41,7 +41,7 @@ export function MemberLogin() {
   }
 
   return (
-    <Box>
+    <Box mt={"30px"}>
       <Box>
         <FormControl>
           <FormLabel>이메일</FormLabel>

@@ -20,7 +20,7 @@ export function BoardList() {
   }, []);
 
   return (
-    <Box>
+    <Box mt={"30px"}>
       <Box>게시물 목록</Box>
       <Box>
         <Table>

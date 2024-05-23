@@ -68,7 +68,7 @@ export function BoardView() {
   // }
 
   return (
-    <Box>
+    <Box mt={"30px"}>
       <Box>{board.id}번 게시물</Box>
       <Box>
         <FormControl>

@@ -64,8 +64,7 @@ export function BoardWrite() {
   }
 
   return (
-    <Box>
-      <Box>글 작성 화면</Box>
+    <Box mt={"30px"}>
       <Box>
         <Box>
           <FormControl>
