@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./page/Home.jsx";
@@ -11,6 +11,8 @@ import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberView } from "./page/member/MemberView.jsx";
 import { MemberEdit } from "./page/member/MemberEdit.jsx";
 import { MemberLogin } from "./page/member/MemberLogin.jsx";
+
+const LoginContext = createContext(null);
 
 const router = createBrowserRouter([
   {
@@ -30,11 +32,17 @@ const router = createBrowserRouter([
   },
 ]);
 
+function LoginProvider({ children }) {
+  return <LoginContext.Provider value={null}>{children}</LoginContext.Provider>;
+}
+
 function App(props) {
   return (
-    <ChakraProvider>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <LoginProvider>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </LoginProvider>
   );
 }
 
