@@ -82,33 +82,34 @@ export function MemberView() {
   return (
     <Box mt={"30px"}>
       <Box>{member.id}번 회원</Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>이메일</FormLabel>
           <Input value={member.email} readOnly />
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>닉네임</FormLabel>
           <Input value={member.nickName} readOnly />
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>가입일시</FormLabel>
           <Input value={member.inserted} readOnly />
         </FormControl>
       </Box>
 
-      <Box>
+      <Box mt={"30px"}>
         <Button
+          ml={"10px"}
           onClick={() => navigate(`/member/edit/${member.id}`)}
           colorScheme={"green"}
         >
           수정
         </Button>
-        <Button onClick={onOpen} colorScheme={"red"}>
+        <Button ml={"10px"} onClick={onOpen} colorScheme={"red"}>
           탈퇴
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>

@@ -145,13 +145,13 @@ export function MemberEdit() {
   return (
     <Box mt={"30px"}>
       <Box>{member.id}번 회원</Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>이메일</FormLabel>
           <Input value={member.email} readOnly />
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>비밀번호</FormLabel>
           <Input
@@ -164,7 +164,7 @@ export function MemberEdit() {
           </FormHelperText>
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>비밀번호 확인</FormLabel>
           <Input onChange={(e) => setPasswordCheck(e.target.value)} />
@@ -175,7 +175,7 @@ export function MemberEdit() {
           )}
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>닉네임</FormLabel>
           <InputGroup>
@@ -204,7 +204,7 @@ export function MemberEdit() {
           )}
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <Button
           isDisabled={isDisableSaveButton}
           colorScheme={"blue"}

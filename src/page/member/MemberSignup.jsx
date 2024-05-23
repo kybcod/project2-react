@@ -173,13 +173,13 @@ export function MemberSignup() {
             )}
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>패스워드</FormLabel>
             <Input onChange={(e) => setPassword(e.target.value)} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>패스워드 확인</FormLabel>
             <Input onChange={(e) => setPasswordCheck(e.target.value)} />
@@ -190,7 +190,7 @@ export function MemberSignup() {
             )}
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>닉네임</FormLabel>
             <InputGroup>
@@ -219,7 +219,7 @@ export function MemberSignup() {
             )}
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <Button
             isDisabled={isDisabled}
             isLoading={isLoading}

@@ -48,7 +48,7 @@ export function MemberLogin() {
           <Input onChange={(e) => setEmail(e.target.value)} />
         </FormControl>
       </Box>
-      <Box>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>비밀번호</FormLabel>
           <Input
