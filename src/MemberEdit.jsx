@@ -189,11 +189,11 @@ export function MemberEdit() {
               </Button>
             </InputRightElement>
           </InputGroup>
-          {
+          {isDisableNickNameCheckButton || (
             <FormHelperText color={"red"}>
               닉네임 중복 확인 해야 합니다.
             </FormHelperText>
-          }
+          )}
         </FormControl>
       </Box>
       <Box>
