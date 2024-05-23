@@ -81,7 +81,7 @@ export function MemberView() {
 
   return (
     <Box>
-      <Box>{member.id}번 게시물</Box>
+      <Box>{member.id}번 회원</Box>
       <Box>
         <FormControl>
           <FormLabel>이메일</FormLabel>

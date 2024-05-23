@@ -59,7 +59,7 @@ export function MemberEdit() {
       .then(() => {
         toast({
           status: "success",
-          description: `${member.id}번 게시물이 수정되었습니다.`,
+          description: `${member.id}번 회원이 수정되었습니다.`,
           position: "top-right",
         });
         navigate(`/member/${member.id}`);
@@ -115,6 +115,7 @@ export function MemberEdit() {
     isDisableNickNameCheckButton = true;
   }
 
+  // 중복확인하지 않으면 비활성화
   if (!isCheckedNickName) {
     isDisableNickNameCheckButton = true;
   }
@@ -131,7 +132,7 @@ export function MemberEdit() {
 
   return (
     <Box>
-      <Box>{member.id}번 게시물</Box>
+      <Box>{member.id}번 회원</Box>
       <Box>
         <FormControl>
           <FormLabel>이메일</FormLabel>
