@@ -33,7 +33,11 @@ export function MemberView() {
 
   useEffect(() => {
     axios
-      .get(`/api/member/${id}`)
+      .get(`/api/member/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((response) => {
         setMember(response.data);
       })
