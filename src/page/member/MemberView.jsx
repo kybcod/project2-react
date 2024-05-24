@@ -46,7 +46,7 @@ export function MemberView() {
           toast({
             status: "error",
             description: "해당 회원이 존재하지 않습니다.",
-            position: "top-right",
+            position: "bottom-right",
             duration: 1000,
           });
         }
@@ -54,7 +54,7 @@ export function MemberView() {
           toast({
             status: "error",
             description: "접근 권한이 없습니다.",
-            position: "top-right",
+            position: "bottom-right",
             duration: 1000,
           });
           navigate(-1); //이전하면
@@ -79,7 +79,7 @@ export function MemberView() {
         toast({
           status: "success",
           description: `${member.id}님이 탈퇴하였습니다. `,
-          position: "top-right",
+          position: "bottom-right",
           duration: 1000,
         });
         account.logout();
@@ -89,7 +89,7 @@ export function MemberView() {
         toast({
           status: "error",
           description: `회원 탈퇴 중 문제가 발생하였습니다.`,
-          position: "top-right",
+          position: "bottom-right",
           duration: 1000,
         });
       })

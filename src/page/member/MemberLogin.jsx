@@ -26,7 +26,7 @@ export function MemberLogin() {
         toast({
           status: "success",
           description: "로그인 성공하였습니다.",
-          position: "top-right",
+          position: "bottom-right",
           duration: 1000,
         });
         navigate("/");
@@ -36,7 +36,7 @@ export function MemberLogin() {
         toast({
           status: "error",
           description: "로그인 실패하였습니다.",
-          position: "top-right",
+          position: "bottom-right",
           duration: 1000,
         });
       });

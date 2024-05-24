@@ -41,7 +41,7 @@ export function BoardEdit() {
         toast({
           status: "success",
           description: `${board.id}번 게시물이 수정되었습니다.`,
-          position: "top-right",
+          position: "bottom-right",
         });
         navigate(`/board/${board.id}`);
       })
@@ -50,7 +50,7 @@ export function BoardEdit() {
           toast({
             status: "error",
             description: `게시물이 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
-            position: "top-right",
+            position: "bottom-right",
           });
         }
       })

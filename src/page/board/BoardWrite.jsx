@@ -39,7 +39,7 @@ export function BoardWrite() {
         toast({
           description: "새 글이 등록되었습니다.",
           status: "success",
-          position: "top-right",
+          position: "bottom-right",
           duration: 1000,
         });
         navigate("/");
@@ -51,7 +51,7 @@ export function BoardWrite() {
           toast({
             status: "error",
             description: "등록되지 않았습니다. 입력한 내용을 확인해주세요.",
-            position: "top-right",
+            position: "bottom-right",
             duration: 1000,
           });
         }

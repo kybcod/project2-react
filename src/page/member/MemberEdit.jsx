@@ -46,7 +46,7 @@ export function MemberEdit() {
         toast({
           status: "error",
           description: "해당 회원이 없습니다.",
-          position: "top-right",
+          position: "bottom-right",
           duration: 1000,
         });
         navigate("/");
@@ -60,7 +60,7 @@ export function MemberEdit() {
         toast({
           status: "success",
           description: `${member.id}번 회원이 수정되었습니다.`,
-          position: "top-right",
+          position: "bottom-right",
         });
         navigate(`/member/${member.id}`);
       })
@@ -69,7 +69,7 @@ export function MemberEdit() {
           toast({
             status: "error",
             description: `회원 정보가 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
-            position: "top-right",
+            position: "bottom-right",
           });
         }
       })
@@ -86,7 +86,7 @@ export function MemberEdit() {
         toast({
           status: "warning",
           description: "중복된 닉네임입니다.",
-          position: "top",
+          position: "bottom-right",
           duration: 1000,
         });
       })
@@ -95,7 +95,7 @@ export function MemberEdit() {
           toast({
             status: "info",
             description: "사용할 수 있는 닉네임입니다.",
-            position: "top",
+            position: "bottom-right",
             duration: 1000,
           });
           setIsCheckedNickName(true); // 중복확인하고 사용할 수 있으면 true, 입력을 시작하면 false

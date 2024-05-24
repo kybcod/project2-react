@@ -37,7 +37,7 @@ export function MemberSignup() {
         toast({
           status: "success",
           description: "회원 가입이 완료되었습니다.",
-          position: "top-right",
+          position: "bottom-right",
           duration: 2000,
         });
         navigate("/"); //로그인 화면으로 이동 나중에 추가
@@ -48,13 +48,13 @@ export function MemberSignup() {
           toast({
             status: "error",
             description: "입력값을 확인해 주세요.",
-            position: "top-right",
+            position: "bottom-right",
           });
         } else {
           toast({
             status: "error",
             description: "회원 가입 중 문제가 발생하였습니다.",
-            position: "top-right",
+            position: "bottom-right",
           });
         }
       })
@@ -68,7 +68,7 @@ export function MemberSignup() {
         toast({
           status: "warning",
           description: "사용할 수 없는 이메일입니다.",
-          position: "top",
+          position: "bottom-right",
           duration: 1000,
         });
       }) // 이미 있는 이메일 (사용 못함)
@@ -78,7 +78,7 @@ export function MemberSignup() {
           toast({
             status: "info",
             description: "사용할 수 있는 이메일입니다.",
-            position: "top",
+            position: "bottom-right",
             duration: 1000,
           });
           setIsCheckedEmail(true);
@@ -94,7 +94,7 @@ export function MemberSignup() {
         toast({
           status: "warning",
           description: "중복된 닉네임입니다.",
-          position: "top",
+          position: "bottom-right",
           duration: 1000,
         });
       })
@@ -103,7 +103,7 @@ export function MemberSignup() {
           toast({
             status: "info",
             description: "사용할 수 있는 닉네임입니다.",
-            position: "top",
+            position: "bottom-right",
             duration: 1000,
           });
           setIsCheckedNickName(true);
