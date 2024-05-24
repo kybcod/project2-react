@@ -6,25 +6,29 @@ export function MemberLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  axios.post("/api/member/login", { email, password })
-    .then((res) => {
-    toast({
-      status: "success",
-      description: "로그인 성공하였습니다.",
-      position: "top-right",
-      duration: 1000,
-    });
-    navigate("/");
-  })
-    .catch((err) => {
-      toast({
-        status: "error",
-        description: "로그인 실패하였습니다.",
-        position: "top-right",
-        duration: 1000,
+  function handleLogin() {
+    axios
+      .post("/api/member/token", { email, password })
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        toast({
+          status: "success",
+          description: "로그인 성공하였습니다.",
+          position: "top-right",
+          duration: 1000,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        localStorage.removeItem("token");
+        toast({
+          status: "error",
+          description: "로그인 실패하였습니다.",
+          position: "top-right",
+          duration: 1000,
+        });
       });
-    })
-}
+  }
   return (
     <Box>
       <Box>
@@ -40,7 +44,9 @@ export function MemberLogin() {
         </FormControl>
       </Box>
       <Box>
-        <Button colorScheme={"yellow"}>로그인</Button>
+        <Button onClick={handleLogin} colorScheme={"yellow"}>
+          로그인
+        </Button>
       </Box>
     </Box>
   );
