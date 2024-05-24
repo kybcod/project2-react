@@ -2,8 +2,11 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -23,10 +26,12 @@ import axios from "axios";
 export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [oldPassword, setOldPassword] = useState("");
+  const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
+  const [isCheckedNickNameButton, setIsCheckedNickNameButton] = useState(false);
 
   useEffect(() => {
     console.log(id);
@@ -48,7 +53,42 @@ export function MemberEdit() {
   }, []);
 
   if (member == null) {
-    <Spinner />;
+    return <Spinner />;
+  }
+
+  function handleCheckNickName() {
+    axios
+      .get(`/api/member/check?nickName=${member.nickName}`)
+      .then((res) => {
+        toast({
+          status: "warning",
+          description: "중복된 닉네임입니다.",
+          position: "top",
+          duration: 1000,
+        });
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast({
+            status: "info",
+            description: "사용할 수 있는 닉네임입니다.",
+            position: "top",
+            duration: 1000,
+          });
+          setIsCheckedNickNameButton(true);
+        }
+      })
+      .finally();
+  }
+
+  function handleUpdate() {}
+
+  let isDisableNickNameCheckButton = false;
+  if (member.nickName === oldNickName) {
+    isDisableNickNameCheckButton = true;
+  }
+  if (member.nickName.trim().length === 0) {
+    isDisableNickNameCheckButton = true;
   }
 
   return (
@@ -77,7 +117,28 @@ export function MemberEdit() {
       <Box>
         <FormControl>
           <FormLabel>닉네임</FormLabel>
-          <Input defaultValue={member.nickName} />
+          <InputGroup>
+            <Input
+              value={member.nickName}
+              onChange={(e) => {
+                const newNickName = e.target.value.trim();
+                setMember({ ...member, nickName: newNickName });
+                setIsCheckedNickNameButton(true);
+              }}
+            />
+            <InputRightElement w={"100px"}>
+              <Button
+                isDisabled={isDisableNickNameCheckButton}
+                onClick={handleCheckNickName}
+                colorScheme={"green"}
+              >
+                중복확인
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          {isCheckedNickNameButton || (
+            <FormHelperText>닉네임 중복 확인 해주세요.</FormHelperText>
+          )}
         </FormControl>
       </Box>
 
@@ -106,7 +167,9 @@ export function MemberEdit() {
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme={"red"}>확인</Button>
+              <Button onClick={handleUpdate} colorScheme={"red"}>
+                확인
+              </Button>
               <Button colorScheme={"blue"} onClick={onClose}>
                 취소
               </Button>
