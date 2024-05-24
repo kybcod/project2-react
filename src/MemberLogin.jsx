@@ -44,7 +44,7 @@ export function MemberLogin() {
       <Box>
         <FormControl>
           <FormLabel>이메일</FormLabel>
-          <Input onChange={(e) => setEmail(e.target.value.trim)} />
+          <Input onChange={(e) => setEmail(e.target.value.trim())} />
         </FormControl>
       </Box>
       <Box>
