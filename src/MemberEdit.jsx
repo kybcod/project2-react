@@ -27,6 +27,7 @@ export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [oldPassword, setOldPassword] = useState("");
   const [oldNickName, setOldNickName] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
   const { id } = useParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
@@ -40,6 +41,7 @@ export function MemberEdit() {
       .then((res) => {
         const member1 = res.data;
         setMember({ ...member1, password: "" });
+        setOldNickName(member1.nickName);
       })
       .catch((err) => {
         toast({
@@ -81,7 +83,31 @@ export function MemberEdit() {
       .finally();
   }
 
-  function handleUpdate() {}
+  function handleUpdate() {
+    axios
+      .put("/api/member/edit", { ...member, oldPassword })
+      .then(() => {
+        toast({
+          status: "success",
+          description: `${member.id}번 회원이 수정되었습니다.`,
+          position: "top-right",
+        });
+        navigate(`/member/${member.id}`);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          toast({
+            status: "error",
+            description: `회원 정보가 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
+            position: "top-right",
+          });
+        }
+      })
+      .finally(() => {
+        onClose();
+        setOldPassword("");
+      });
+  }
 
   let isDisableNickNameCheckButton = false;
   if (member.nickName === oldNickName) {
@@ -104,13 +130,20 @@ export function MemberEdit() {
       <Box>
         <FormControl>
           <FormLabel>비밀번호</FormLabel>
-          <Input defaultValue={member.password} readOnly />
+          <Input
+            onChange={(e) => setMember({ ...member, password: e.target.value })}
+          />
         </FormControl>
       </Box>
       <Box>
         <FormControl>
           <FormLabel>비밀번호 확인</FormLabel>
-          <Input />
+          <Input onChange={(e) => setPasswordCheck(e.target.value)} />
+          {member.password === passwordCheck || (
+            <FormHelperText color={"red"}>
+              비밀번호 체크해주세요.
+            </FormHelperText>
+          )}
         </FormControl>
       </Box>
 
