@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 export const LoginContext = createContext(null);
 
 export function LoginProvider({ children }) {
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
   const [expired, setExpired] = useState(0);
 
@@ -28,31 +28,31 @@ export function LoginProvider({ children }) {
     localStorage.setItem("token", token);
     const payload = jwtDecode(token);
     setExpired(payload.exp);
-    setEmail(payload.sub);
+    setId(payload.sub);
     setNickName(payload.nickName);
   }
 
   function logout() {
     localStorage.removeItem("token");
     setExpired(0);
-    setEmail("");
+    setId("");
     setNickName("");
   }
 
-  // 특정 email을 가지고 있는지
-  function hasEmail(param) {
-    return email === param;
+  // 권한 있는지
+  function hasAccess(param) {
+    return id == param;
   }
 
   return (
     <LoginContext.Provider
       value={{
-        email,
+        id,
         nickName,
         login,
         logout,
         isLoggedIn,
-        hasEmail,
+        hasAccess,
       }}
     >
       {children}
