@@ -9,8 +9,9 @@ import { BoardEdit } from "./page/board/BoardEdit.jsx";
 import { MemberJoin } from "./page/member/MemberJoin.jsx";
 import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
-import { MemberEdit } from "./MemberEdit.jsx";
-import { MemberLogin } from "./MemberLogin.jsx";
+import { MemberEdit } from "./page/member/MemberEdit.jsx";
+import { MemberLogin } from "./page/member/MemberLogin.jsx";
+import { LoginProvider } from "./component/LoginProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,9 +33,11 @@ const router = createBrowserRouter([
 
 function App(props) {
   return (
-    <ChakraProvider>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <LoginProvider>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </LoginProvider>
   );
 }
 
