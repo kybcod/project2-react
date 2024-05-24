@@ -122,45 +122,47 @@ export function MemberView() {
         </FormControl>
       </Box>
 
-      <Box mt={"30px"}>
-        <Button
-          ml={"10px"}
-          onClick={() => navigate(`/member/edit/${member.id}`)}
-          colorScheme={"green"}
-        >
-          수정
-        </Button>
-        <Button ml={"10px"} onClick={onOpen} colorScheme={"red"}>
-          탈퇴
-        </Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>
-              <FontAwesomeIcon icon={faTriangleExclamation} />
-              경고
-            </ModalHeader>
-            <ModalBody>
-              <FormControl>
-                <FormLabel>암호</FormLabel>
-                <Input onChange={(e) => setPassword(e.target.value)} />
-              </FormControl>
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                isLoading={isLoading}
-                colorScheme={"red"}
-                onClick={handleDeleteClick}
-              >
-                탈퇴
-              </Button>
-              <Button colorScheme={"blue"} onClick={onClose}>
-                취소
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Box>
+      {account.hasAccess(member.id) && (
+        <Box mt={"30px"}>
+          <Button
+            ml={"10px"}
+            onClick={() => navigate(`/member/edit/${member.id}`)}
+            colorScheme={"green"}
+          >
+            수정
+          </Button>
+          <Button ml={"10px"} onClick={onOpen} colorScheme={"red"}>
+            탈퇴
+          </Button>
+        </Box>
+      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            경고
+          </ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>암호</FormLabel>
+              <Input onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              isLoading={isLoading}
+              colorScheme={"red"}
+              onClick={handleDeleteClick}
+            >
+              탈퇴
+            </Button>
+            <Button colorScheme={"blue"} onClick={onClose}>
+              취소
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
