@@ -46,7 +46,7 @@ export function MemberEdit() {
         toast({
           status: "warning",
           description: "회원 정보 조회 중 문제가 발생하였습니다.",
-          position: "top",
+          position: "bottom-right",
         });
         navigate("/");
       });
@@ -59,7 +59,7 @@ export function MemberEdit() {
         toast({
           status: "success",
           description: "회원 정보가 수정되었습니다.",
-          position: "top",
+          position: "bottom-right",
         });
         account.login(res.data.token);
         navigate(`/member/${id}`);
@@ -68,7 +68,7 @@ export function MemberEdit() {
         toast({
           status: "error",
           description: "회원 정보가 수정되지 않았습니다.",
-          position: "top",
+          position: "bottom-right",
         });
       })
       .finally(() => {
@@ -116,7 +116,7 @@ export function MemberEdit() {
         toast({
           status: "warning",
           description: "사용할 수 없는 별명입니다.",
-          position: "top",
+          position: "bottom-right",
         });
       })
       .catch((err) => {
@@ -124,7 +124,7 @@ export function MemberEdit() {
           toast({
             status: "info",
             description: "사용할 수 있는 별명입니다.",
-            position: "top",
+            position: "bottom-right",
           });
           setIsCheckedNickName(true);
         }
@@ -178,6 +178,7 @@ export function MemberEdit() {
             />
             <InputRightElement w={"75px"} mr={1}>
               <Button
+                colorScheme={"green"}
                 isDisabled={isDisableNickNameCheckButton}
                 size={"sm"}
                 onClick={handleCheckNickName}
