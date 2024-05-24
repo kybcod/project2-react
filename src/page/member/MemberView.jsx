@@ -14,11 +14,12 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons/faTriangleExclamation";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function MemberView() {
   const { id } = useParams();
@@ -28,6 +29,7 @@ export function MemberView() {
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const account = useContext(LoginContext);
 
   useEffect(() => {
     axios
@@ -67,12 +69,13 @@ export function MemberView() {
           position: "top-right",
           duration: 1000,
         });
-        navigate("/member/list");
+        account.logout();
+        navigate("/");
       })
       .catch((err) => {
         toast({
           status: "error",
-          description: `올바른 비밀번호가 아닙니다.`,
+          description: `회원 탈퇴 중 문제가 발생하였습니다.`,
           position: "top-right",
           duration: 1000,
         });
