@@ -27,7 +27,7 @@ export function Navbar() {
           글쓰기
         </Box>
       )}
-      {account.isLoggedIn() && (
+      {account.isAdmin() && (
         <Box
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
