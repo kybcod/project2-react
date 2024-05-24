@@ -34,7 +34,7 @@ export function Navbar() {
           {account.nickName}
         </Box>
       )}
-      {account.isLoggedIn() || (
+      {account.isLoggedIn() && (
         <Box
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
