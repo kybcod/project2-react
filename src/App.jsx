@@ -10,6 +10,7 @@ import { MemberJoin } from "./page/member/MemberJoin.jsx";
 import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
 import { MemberEdit } from "./MemberEdit.jsx";
+import { MemberLogin } from "./MemberLogin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "member/list", element: <MemberList /> },
       { path: "member/:id", element: <MemberInfo /> },
       { path: "member/edit/:id", element: <MemberEdit /> },
+      { path: "login", element: <MemberLogin /> },
     ],
   },
 ]);
