@@ -50,6 +50,15 @@ export function MemberView() {
             duration: 1000,
           });
         }
+        if (err.response.status === 403) {
+          toast({
+            status: "error",
+            description: "접근 권한이 없습니다.",
+            position: "top-right",
+            duration: 1000,
+          });
+          navigate(-1); //이전하면
+        }
       });
   }, []);
 

@@ -27,13 +27,6 @@ export function Navbar() {
           글쓰기
         </Box>
       )}
-      <Spacer />
-      {account.isLoggedIn() && (
-        <Box>
-          <FontAwesomeIcon icon={faUser} />
-          {account.nickName}
-        </Box>
-      )}
       {account.isLoggedIn() && (
         <Box
           onClick={() => navigate("/member/list")}
@@ -45,6 +38,13 @@ export function Navbar() {
       )}
 
       <Spacer />
+      {account.isLoggedIn() && (
+        <Box>
+          <FontAwesomeIcon icon={faUser} />
+          {account.nickName}
+        </Box>
+      )}
+
       <ButtonGroup gap="1">
         {account.isLoggedIn() || (
           <Button
