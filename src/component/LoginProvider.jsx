@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 export const LoginContext = createContext(null);
-export function LoginProvider(props) {
+export function LoginProvider({ children }) {
   // 닉네임, 아이디, isLoggedIn, login, logout, hasAccess. isAdmin
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
