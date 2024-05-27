@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Spinner,
   Table,
   Tbody,
@@ -9,18 +10,21 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 export function MemberList() {
   const [memberList, setMemberList] = useState([]);
   const navigate = useNavigate();
+  const [memberPageInfo, setMemberPageInfo] = useState({});
+  const [page] = useSearchParams();
 
   useEffect(() => {
-    axios.get("/api/member/list").then((res) => {
-      setMemberList(res.data);
+    axios.get(`/api/member/list?${page}`).then((res) => {
+      setMemberList(res.data.memberList);
+      setMemberPageInfo(res.data.memberPageInfo);
     });
-  }, []);
+  }, [page]);
 
   if (memberList.length === 0) {
     return <Spinner />;
@@ -54,6 +58,11 @@ export function MemberList() {
             ))}
           </Tbody>
         </Table>
+      </Box>
+      <Box>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((pageNumber) => {
+          <Button>{pageNumber}</Button>;
+        })}
       </Box>
     </Box>
   );
