@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Spinner,
   Table,
   Tbody,
@@ -9,14 +10,14 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 export function MemberList() {
   const [memberList, setMemberList] = useState([]);
-  const navigate = useNavigate();
   const [memberPageInfo, setMemberPageInfo] = useState({});
+  const navigate = useNavigate();
   const [page] = useSearchParams();
 
   useEffect(() => {
@@ -25,6 +26,11 @@ export function MemberList() {
       setMemberPageInfo(res.data.memberPageInfo);
     });
   }, [page]);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= memberPageInfo.lastPage; i++) {
+    pageNumbers.push(i);
+  }
 
   if (memberList.length === 0) {
     return <Spinner />;
@@ -59,11 +65,24 @@ export function MemberList() {
           </Tbody>
         </Table>
       </Box>
-      <Box>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((pageNumber) => {
-          <Button>{pageNumber}</Button>;
-        })}
-      </Box>
+      <Center>
+        <Box>
+          {pageNumbers.map((pageNumber) => (
+            <Button
+              mr={"10px"}
+              onClick={() => {
+                navigate(`?page=${pageNumber}`);
+              }}
+              key={pageNumber}
+              colorScheme={
+                pageNumber == memberPageInfo.currentPage ? "teal" : "gray"
+              }
+            >
+              {pageNumber}
+            </Button>
+          ))}
+        </Box>
+      </Center>
     </Box>
   );
 }
