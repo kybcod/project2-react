@@ -2,6 +2,9 @@ import {
   Box,
   Button,
   Center,
+  Flex,
+  Input,
+  Select,
   Table,
   Tbody,
   Td,
@@ -16,6 +19,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faMagnifyingGlass,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -25,13 +29,9 @@ export function BoardList() {
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
-  // const boardList = [
-  //   { id: 5, title: "title1", writer: "who1" },
-  //   { id: 6, title: "title1", writer: "who1" },
-  //   { id: 7, title: "title1", writer: "who1" },
-  //   { id: 8, title: "title1", writer: "who1" },
-  // ];
   const [searchParams] = useSearchParams(); //key,value로 저장
+  const [searchType, setSearchType] = useState("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
     axios.get(`/api/board/list?${searchParams}`).then((res) => {
@@ -44,6 +44,10 @@ export function BoardList() {
   const pageNumbers = [];
   for (let i = pageInfo.leftPageNumber; i <= pageInfo.rightPageNumber; i++) {
     pageNumbers.push(i);
+  }
+
+  function handleSearchClick() {
+    navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
   }
 
   return (
@@ -76,8 +80,36 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
+
+      {/*검색*/}
       <Center>
-        <Box>
+        <Box mt={"30px"}>
+          <Flex>
+            <Box>
+              <Select onChange={(e) => setSearchType(e.target.value)}>
+                <option value={"all"}>전체</option>
+                <option value={"text"}>글(제목+내용)</option>
+                <option value={"nickName"}> 작성자</option>
+              </Select>
+            </Box>
+            <Box>
+              <Input
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                placeholder={"검색어를 입력하세요."}
+              />
+            </Box>
+            <Box>
+              <Button onClick={handleSearchClick}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </Button>
+            </Box>
+          </Flex>
+        </Box>
+      </Center>
+
+      {/*페이지네이션*/}
+      <Center>
+        <Box mt={"30px"}>
           {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
           {pageInfo.prevPageNumber && (
             <>

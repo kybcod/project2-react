@@ -65,6 +65,23 @@ export function MemberList() {
           </Tbody>
         </Table>
       </Box>
+
+      {/*/!*검색*!/*/}
+      {/*<Box>*/}
+      {/*  <Flex>*/}
+      {/*    <Box>*/}
+      {/*      <Select>*/}
+      {/*        <option value={"all"}>전체</option>*/}
+      {/*        <option value={"text"}>글(제목+내용)</option>*/}
+      {/*        <option value={"nickName"}> 작성자</option>*/}
+      {/*      </Select>*/}
+      {/*    </Box>*/}
+      {/*    <Box></Box>*/}
+      {/*    <Box></Box>*/}
+      {/*  </Flex>*/}
+      {/*</Box>*/}
+
+      {/*/!*페이지네이션*!/*/}
       <Center>
         <Box>
           {pageNumbers.map((pageNumber) => (
