@@ -29,7 +29,7 @@ export function BoardList() {
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
-  const [searchParams] = useSearchParams(); //key,value로 저장
+  const [searchParams] = useSearchParams();
   const [searchType, setSearchType] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -38,6 +38,10 @@ export function BoardList() {
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
+
+    setSearchType("all");
+    setSearchKeyword("");
+
     const typeParam = searchParams.get("type");
     const keywordParam = searchParams.get("keyword");
     if (typeParam) {
