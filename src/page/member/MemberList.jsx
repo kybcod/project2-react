@@ -28,7 +28,7 @@ export function MemberList() {
   }, [page]);
 
   const pageNumbers = [];
-  for (let i = 1; i <= memberPageInfo.lastPage; i++) {
+  for (let i = memberPageInfo.beginPage; i <= memberPageInfo.endPage; i++) {
     pageNumbers.push(i);
   }
 
@@ -83,6 +83,16 @@ export function MemberList() {
 
       {/*/!*페이지네이션*!/*/}
       <Center>
+        {memberPageInfo.prevPage && (
+          <>
+            <Button onClick={() => navigate(`?page=1`)}>처음</Button>
+            <Button
+              onClick={() => navigate(`?page=${memberPageInfo.prevPage}`)}
+            >
+              이전
+            </Button>
+          </>
+        )}
         <Box>
           {pageNumbers.map((pageNumber) => (
             <Button
@@ -98,6 +108,20 @@ export function MemberList() {
               {pageNumber}
             </Button>
           ))}
+          {memberPageInfo.nextPage && (
+            <>
+              <Button
+                onClick={() => navigate(`?page=${memberPageInfo.nextPage}`)}
+              >
+                다음
+              </Button>
+              <Button
+                onClick={() => navigate(`?page=${memberPageInfo.lastPage}`)}
+              >
+                맨끝
+              </Button>
+            </>
+          )}
         </Box>
       </Center>
     </Box>
