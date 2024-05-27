@@ -1,7 +1,13 @@
 import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+  faUserPen,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -61,9 +67,26 @@ export function BoardList() {
         </Table>
       </Box>
       <Box>
+        {/*만약에 현재 페이지 번호가 1이라면 처음 버튼 안보이게 합니다*/}
+        {pageInfo.currentPageNumber === 1 || (
+          <Button onClick={() => navigate(`/?page=1`)}>
+            <FontAwesomeIcon icon={faAnglesLeft} />
+          </Button>
+        )}
+
+        {/*만약에 현재 페이지 번호가 11보다 작으면 처음 버튼 안보이게 합니다*/}
+        {pageInfo.currentPageNumber < 11 || (
+          <Button onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}>
+            <FontAwesomeIcon icon={faAngleLeft} />
+          </Button>
+        )}
+
+        {/*페이지 번호*/}
         {pageNumbers.map((pageNumber) => (
           <Button
-            onClick={() => navigate(`/?page=${pageNumber}`)}
+            onClick={() => {
+              navigate(`/?page=${pageNumber}`);
+            }}
             key={pageNumber}
             colorScheme={
               pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
@@ -72,6 +95,20 @@ export function BoardList() {
             {pageNumber}
           </Button>
         ))}
+
+        {/*만약 다음 페이지 번호가 마지막 페이지 번호 보다 작으면 안보이게 합니다. */}
+        {pageInfo.nextPageNumber > pageInfo.lastPageNumber || (
+          <Button onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}>
+            <FontAwesomeIcon icon={faAngleRight} />
+          </Button>
+        )}
+
+        {/*현재 페이지 번호가 마지막 페이지 번호이면 맨끝 버튼 안보이게 합니다.*/}
+        {pageInfo.currentPageNumber === pageInfo.lastPageNumber || (
+          <Button onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}>
+            <FontAwesomeIcon icon={faAnglesRight} />
+          </Button>
+        )}
       </Box>
     </Box>
   );
