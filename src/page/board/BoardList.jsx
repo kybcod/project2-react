@@ -24,9 +24,9 @@ export function BoardList() {
     });
   }, [searchParams]); //의존성(dependency)가 있다면 변경될때마다 함수를 trigger를 합니다.
 
-  // 총 페이지 수 보이기
+  // 총 페이지 번호
   const pageNumbers = [];
-  for (let i = 1; i <= pageInfo.lastPageNumber; i++) {
+  for (let i = pageInfo.leftPageNumber; i <= pageInfo.rightPageNumber; i++) {
     pageNumbers.push(i);
   }
 
@@ -65,6 +65,9 @@ export function BoardList() {
           <Button
             onClick={() => navigate(`/?page=${pageNumber}`)}
             key={pageNumber}
+            colorScheme={
+              pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
+            }
           >
             {pageNumber}
           </Button>
