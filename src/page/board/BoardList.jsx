@@ -38,6 +38,15 @@ export function BoardList() {
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
+    const typeParam = searchParams.get("type");
+    const keywordParam = searchParams.get("keyword");
+    if (typeParam) {
+      setSearchType(typeParam);
+    }
+
+    if (keywordParam) {
+      setSearchKeyword(keywordParam);
+    }
   }, [searchParams]); //의존성(dependency)가 있다면 변경될때마다 함수를 trigger를 합니다.
 
   // 총 페이지 번호
@@ -48,6 +57,11 @@ export function BoardList() {
 
   function handleSearchClick() {
     navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
+  }
+
+  function handlePageButtonClick(pageNumber) {
+    searchParams.set("page", pageNumber);
+    navigate(`/?${searchParams}`);
   }
 
   return (
@@ -89,7 +103,10 @@ export function BoardList() {
         <Box mt={"30px"}>
           <Flex>
             <Box>
-              <Select onChange={(e) => setSearchType(e.target.value)}>
+              <Select
+                value={searchType}
+                onChange={(e) => setSearchType(e.target.value)}
+              >
                 <option value={"all"}>전체</option>
                 <option value={"text"}>글(제목+내용)</option>
                 <option value={"nickName"}> 작성자</option>
@@ -97,6 +114,7 @@ export function BoardList() {
             </Box>
             <Box>
               <Input
+                value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 placeholder={"검색어를 입력하세요."}
               />
@@ -116,11 +134,11 @@ export function BoardList() {
           {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
           {pageInfo.prevPageNumber && (
             <>
-              <Button onClick={() => navigate(`/?page=1`)}>
+              <Button onClick={() => handlePageButtonClick(1)}>
                 <FontAwesomeIcon icon={faAnglesLeft} />
               </Button>
               <Button
-                onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+                onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
               >
                 <FontAwesomeIcon icon={faAngleLeft} />
               </Button>
@@ -131,9 +149,7 @@ export function BoardList() {
           {pageNumbers.map((pageNumber) => (
             <Button
               mr={"10px"}
-              onClick={() => {
-                navigate(`/?page=${pageNumber}`);
-              }}
+              onClick={() => handlePageButtonClick(pageNumber)}
               key={pageNumber}
               colorScheme={
                 pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
@@ -147,12 +163,12 @@ export function BoardList() {
           {pageInfo.nextPageNumber && (
             <>
               <Button
-                onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+                onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
               >
                 <FontAwesomeIcon icon={faAngleRight} />
               </Button>
               <Button
-                onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+                onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
               >
                 <FontAwesomeIcon icon={faAnglesRight} />
               </Button>
