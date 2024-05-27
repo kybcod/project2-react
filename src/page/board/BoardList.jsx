@@ -54,31 +54,34 @@ export function BoardList() {
     <Box mt={"30px"}>
       <Box>게시물 목록</Box>
       <Box>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>NO</Th>
-              <Th>제목</Th>
-              <Th>
-                <FontAwesomeIcon icon={faUserPen} />
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {boardList.map((board) => (
-              <Tr
-                cursor={"pointer"}
-                _hover={{ bgColor: "gray.200" }}
-                onClick={() => navigate(`/board/${board.id}`)}
-                key={board.id}
-              >
-                <Td>{board.id}</Td>
-                <Td>{board.title}</Td>
-                <Td>{board.writer}</Td>
+        {boardList.length === 0 && <Center>조회된 결과가 없습니다.</Center>}
+        {boardList.length > 0 && (
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>NO</Th>
+                <Th>제목</Th>
+                <Th>
+                  <FontAwesomeIcon icon={faUserPen} />
+                </Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {boardList.map((board) => (
+                <Tr
+                  cursor={"pointer"}
+                  _hover={{ bgColor: "gray.200" }}
+                  onClick={() => navigate(`/board/${board.id}`)}
+                  key={board.id}
+                >
+                  <Td>{board.id}</Td>
+                  <Td>{board.title}</Td>
+                  <Td>{board.writer}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        )}
       </Box>
 
       {/*검색*/}
