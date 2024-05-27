@@ -1,4 +1,14 @@
-import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -66,53 +76,55 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
-      <Box>
-        {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
-        {pageInfo.prevPageNumber && (
-          <>
-            <Button onClick={() => navigate(`/?page=1`)}>
-              <FontAwesomeIcon icon={faAnglesLeft} />
-            </Button>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleLeft} />
-            </Button>
-          </>
-        )}
+      <Center>
+        <Box>
+          {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
+          {pageInfo.prevPageNumber && (
+            <>
+              <Button onClick={() => navigate(`/?page=1`)}>
+                <FontAwesomeIcon icon={faAnglesLeft} />
+              </Button>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </Button>
+            </>
+          )}
 
-        {/*페이지 번호*/}
-        {pageNumbers.map((pageNumber) => (
-          <Button
-            mr={"10px"}
-            onClick={() => {
-              navigate(`/?page=${pageNumber}`);
-            }}
-            key={pageNumber}
-            colorScheme={
-              pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
-            }
-          >
-            {pageNumber}
-          </Button>
-        ))}
+          {/*페이지 번호*/}
+          {pageNumbers.map((pageNumber) => (
+            <Button
+              mr={"10px"}
+              onClick={() => {
+                navigate(`/?page=${pageNumber}`);
+              }}
+              key={pageNumber}
+              colorScheme={
+                pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
+              }
+            >
+              {pageNumber}
+            </Button>
+          ))}
 
-        {/*만약 다음 버튼이 보이면 맨끝 버튼도 보인다. */}
-        {pageInfo.nextPageNumber && (
-          <>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleRight} />
-            </Button>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAnglesRight} />
-            </Button>
-          </>
-        )}
-      </Box>
+          {/*만약 다음 버튼이 보이면 맨끝 버튼도 보인다. */}
+          {pageInfo.nextPageNumber && (
+            <>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAngleRight} />
+              </Button>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAnglesRight} />
+              </Button>
+            </>
+          )}
+        </Box>
+      </Center>
     </Box>
   );
 }
