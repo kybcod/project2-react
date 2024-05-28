@@ -48,6 +48,7 @@ export function BoardEdit() {
         title: board.title,
         content: board.content,
         removeFileList,
+        addFileList,
       })
       .then(() => {
         toast({
