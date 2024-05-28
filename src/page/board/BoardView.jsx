@@ -89,10 +89,15 @@ export function BoardView() {
           </FormControl>
         </Box>
         <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
-          {board.imageScrList &&
-            board.imageScrList.map((src) => (
-              <Box boxSize={"310px"} border={"2px solid black"} m={3} key={src}>
-                <Image boxSize={"300px"} src={src} />
+          {board.files &&
+            board.files.map((file) => (
+              <Box
+                boxSize={"310px"}
+                border={"2px solid black"}
+                m={3}
+                key={file.name}
+              >
+                <Image boxSize={"300px"} src={file.src} />
               </Box>
             ))}
         </Box>

@@ -6,6 +6,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -76,7 +77,7 @@ export function BoardEdit() {
             />
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea
@@ -85,14 +86,27 @@ export function BoardEdit() {
             ></Textarea>
           </FormControl>
         </Box>
-        <Box>
+        <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
+          {board.files &&
+            board.files.map((file) => (
+              <Box
+                boxSize={"310px"}
+                border={"2px solid black"}
+                m={3}
+                key={file.name}
+              >
+                <Image boxSize={"300px"} src={file.src} />
+              </Box>
+            ))}
+        </Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input defaultValue={board.writer} readOnly />
           </FormControl>
         </Box>
-        <Box>
-          <Button colorScheme={"green"} onClick={onOpen}>
+        <Box mt={"30px"}>
+          <Button w={"100px"} colorScheme={"green"} onClick={onOpen}>
             저장
           </Button>
         </Box>
