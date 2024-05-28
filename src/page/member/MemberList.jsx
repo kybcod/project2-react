@@ -30,8 +30,20 @@ export function MemberList() {
       setMemberList(res.data.memberList);
       setMemberPageInfo(res.data.memberPageInfo);
     });
+
+    setType("all");
+    setKeyword("");
+
     const typeParam = page.get("type");
     const keywordParam = page.get("keyword");
+
+    if (typeParam) {
+      setType(typeParam);
+    }
+
+    if (keywordParam) {
+      setKeyword(keywordParam);
+    }
   }, [page]);
 
   const pageNumbers = [];
@@ -88,14 +100,17 @@ export function MemberList() {
         <Box>
           <Flex>
             <Box>
-              <Select onChange={(e) => setType(e.target.value)}>
+              <Select value={type} onChange={(e) => setType(e.target.value)}>
                 <option value={"all"}>전체</option>
                 <option value={"email"}>이메일</option>
                 <option value={"nickName"}>닉네임</option>
               </Select>
             </Box>
             <Box>
-              <Input onChange={(e) => setKeyword(e.target.value)} />
+              <Input
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
             </Box>
             <Box>
               <Button
@@ -113,9 +128,17 @@ export function MemberList() {
         <Box mt={"30px"}>
           {memberPageInfo.prevPage && (
             <>
-              <Button onClick={() => navigate(`?page=1`)}>처음</Button>
               <Button
-                onClick={() => navigate(`?page=${memberPageInfo.prevPage}`)}
+                onClick={() => {
+                  handlePageClick(1);
+                }}
+              >
+                처음
+              </Button>
+              <Button
+                onClick={() => {
+                  handlePageClick(memberPageInfo.prevPage);
+                }}
               >
                 이전
               </Button>
@@ -140,12 +163,16 @@ export function MemberList() {
           {memberPageInfo.nextPage && (
             <>
               <Button
-                onClick={() => navigate(`?page=${memberPageInfo.nextPage}`)}
+                onClick={() => {
+                  handlePageClick(memberPageInfo.nextPage);
+                }}
               >
                 다음
               </Button>
               <Button
-                onClick={() => navigate(`?page=${memberPageInfo.lastPage}`)}
+                onClick={() => {
+                  handlePageClick(memberPageInfo.lastPage);
+                }}
               >
                 맨끝
               </Button>
