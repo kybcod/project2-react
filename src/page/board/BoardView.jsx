@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormLabel,
   Image,
@@ -89,15 +90,21 @@ export function BoardView() {
           </FormControl>
         </Box>
         <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
-          {board.files &&
-            board.files.map((file) => (
+          {board.fileList &&
+            board.fileList.map((file) => (
               <Box
-                boxSize={"310px"}
+                boxSize={"190px"}
                 border={"2px solid black"}
                 m={3}
                 key={file.name}
               >
-                <Image boxSize={"300px"} src={file.src} />
+                <Center>
+                  <Image
+                    borderRadius={"full"}
+                    boxSize={"180px"}
+                    src={file.src}
+                  />
+                </Center>
               </Box>
             ))}
         </Box>

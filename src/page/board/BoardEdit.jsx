@@ -4,6 +4,8 @@ import axios from "axios";
 import {
   Box,
   Button,
+  Center,
+  Flex,
   FormControl,
   FormLabel,
   Image,
@@ -15,14 +17,19 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Switch,
+  Text,
   Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export function BoardEdit() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const [removeFileList, setRemoveFileList] = useState([]);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -33,10 +40,11 @@ export function BoardEdit() {
 
   function handleClickSave() {
     axios
-      .put("/api/board/edit", board, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+      .putForm("/api/board/edit", {
+        id: board.id,
+        title: board.title,
+        content: board.content,
+        removeFileList,
       })
       .then(() => {
         toast({
@@ -64,6 +72,16 @@ export function BoardEdit() {
     return <Spinner />;
   }
 
+  function handleRemoveSwitchChange(name, checked) {
+    if (checked) {
+      // 체크 되면 파일 삭제할 배열에 추가
+      setRemoveFileList([...removeFileList, name]);
+    } else {
+      // 지울 목록에 있었다면 해당 이름 제외
+      setRemoveFileList(removeFileList.filter((item) => item !== name));
+    }
+  }
+
   return (
     <Box mt={"30px"}>
       <Box>{board.id}번 게시물 수정</Box>
@@ -87,15 +105,41 @@ export function BoardEdit() {
           </FormControl>
         </Box>
         <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
-          {board.files &&
-            board.files.map((file) => (
+          {board.fileList &&
+            board.fileList.map((file) => (
               <Box
-                boxSize={"310px"}
+                boxSize={"210px"}
                 border={"2px solid black"}
                 m={3}
                 key={file.name}
               >
-                <Image boxSize={"300px"} src={file.src} />
+                <Center>
+                  <Box>
+                    <Flex>
+                      <FontAwesomeIcon icon={faTrashCan} />
+                      <Switch
+                        onChange={(e) =>
+                          handleRemoveSwitchChange(file.name, e.target.checked)
+                        }
+                      />
+                      <Text>{file.name}</Text>
+                    </Flex>
+                  </Box>
+                </Center>
+                <Center>
+                  <Box>
+                    <Image
+                      sx={
+                        removeFileList.includes(file.name)
+                          ? { filter: "blur(5px)" }
+                          : {}
+                      }
+                      borderRadius={"full"}
+                      boxSize={"180px"}
+                      src={file.src}
+                    />
+                  </Box>
+                </Center>
               </Box>
             ))}
         </Box>
