@@ -99,8 +99,8 @@ export function BoardList() {
                     {board.title}
                     {board.numberOfImages > 0 && (
                       <Badge>
-                        <FontAwesomeIcon icon={faImages} />
-                        {board.numberOfImages}
+                        <FontAwesomeIcon icon={faImages} />(
+                        {board.numberOfImages})
                       </Badge>
                     )}
                   </Td>
