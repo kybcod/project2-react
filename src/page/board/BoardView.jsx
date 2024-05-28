@@ -6,6 +6,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -81,26 +82,34 @@ export function BoardView() {
           <FormLabel>제목</FormLabel>
           <Input value={board.title} readOnly />
         </FormControl>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Input value={board.content} readOnly />
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
+          {board.imageScrList &&
+            board.imageScrList.map((src) => (
+              <Box border={"2px solid black"} m={3} key={src}>
+                <Image src={src} />
+              </Box>
+            ))}
+        </Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input value={board.writer} readOnly />
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>작성일시</FormLabel>
             <Input type={"datetime-local"} value={board.inserted} readOnly />
           </FormControl>
         </Box>
         {account.hasAccess(board.memberId) && (
-          <Box>
+          <Box mt={"30px"}>
             <Button
               colorScheme={"purple"}
               onClick={() => navigate(`/edit/${board.id}`)}
