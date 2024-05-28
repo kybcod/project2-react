@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
@@ -24,14 +25,16 @@ export function MemberSignup() {
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
+  const [file, setFile] = useState(null);
 
   function handleMemberSaveClick() {
     setIsLoading(true);
     axios
-      .post("/api/member/signup", {
+      .postForm("/api/member/signup", {
         email,
         password,
         nickName,
+        file,
       })
       .then((res) => {
         toast({
@@ -137,6 +140,8 @@ export function MemberSignup() {
 
   const isCheckPassword = password === passwordCheck;
 
+  let filePath;
+
   return (
     <Box mt={"30px"}>
       <Box>
@@ -219,6 +224,22 @@ export function MemberSignup() {
             )}
           </FormControl>
         </Box>
+
+        <Box mt={"30px"}>
+          <FormControl>
+            <FormLabel>프로필 사진</FormLabel>
+            <Box mt={"30px"}>
+              <Image boxSize={"180px"} />
+            </Box>
+            <Input
+              mt={"10px"}
+              type={"file"}
+              accept={"image/*"}
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </FormControl>
+        </Box>
+
         <Box mt={"30px"}>
           <Button
             isDisabled={isDisabled}
