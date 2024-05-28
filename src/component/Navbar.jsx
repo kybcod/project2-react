@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
+  const [ani1, setAni1] = useState(false);
   const navigate = useNavigate();
   const account = useContext(LoginContext);
 
@@ -16,7 +18,12 @@ export function Navbar() {
         cursor={"pointer"}
         _hover={{ bgColor: "gray.200" }}
       >
-        Home
+        <FontAwesomeIcon
+          onMouseOver={() => setAni1(true)}
+          onMouseLeave={() => setAni1(false)}
+          icon={faHouse}
+          beatFade={ani1}
+        />
       </Box>
       {account.isLoggedIn() && (
         <Box
