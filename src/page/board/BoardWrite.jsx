@@ -15,6 +15,7 @@ import { LoginContext } from "../../component/LoginProvider.jsx";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [files, setFiles] = useState([]);
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -68,6 +69,12 @@ export function BoardWrite() {
     disableSaveButton = true;
   }
 
+  // file 목록 작성
+  const fileNameList = [];
+  for (let i = 0; i < files.length; i++) {
+    fileNameList.push(<li>{files[i].name}</li>);
+  }
+
   return (
     <Box mt={"30px"}>
       <Box>
@@ -77,20 +84,37 @@ export function BoardWrite() {
             <Input onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
+        <Box mt={"30px"}>
+          <FormControl>
+            <FormLabel>파일</FormLabel>
+            <Input
+              multiple={true}
+              type={"file"}
+              accept={"image/*"}
+              onChange={(e) => {
+                setFiles(e.target.files);
+              }}
+            />
+          </FormControl>
+        </Box>
         <Box>
+          <ul>{fileNameList}</ul>
+        </Box>
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={"30px"}>
           <Button
+            w={"100px"}
             isLoading={loading}
             isDisabled={disableSaveButton}
             colorScheme={"blue"}
