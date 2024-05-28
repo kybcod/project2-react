@@ -88,11 +88,11 @@ export function BoardView() {
             <Input value={board.content} readOnly />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
           {board.imageScrList &&
             board.imageScrList.map((src) => (
-              <Box border={"2px solid black"} m={3} key={src}>
-                <Image src={src} />
+              <Box boxSize={"310px"} border={"2px solid black"} m={3} key={src}>
+                <Image boxSize={"300px"} src={src} />
               </Box>
             ))}
         </Box>
