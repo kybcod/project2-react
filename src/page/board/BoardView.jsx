@@ -18,6 +18,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Spinner,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -35,6 +36,7 @@ export function BoardView() {
   const account = useContext(LoginContext);
   const [ani1, setAni1] = useState(false);
   const [like, setLike] = useState({ like: false, count: 0 });
+  const [isLikeProcessing, setIsLikeProcessing] = useState(false);
 
   useEffect(() => {
     axios
@@ -80,6 +82,7 @@ export function BoardView() {
   // }
 
   function handleClickLike() {
+    setIsLikeProcessing(true);
     axios
       .put(`/api/board/like`, { boardId: board.id })
       .then((res) => {
@@ -87,7 +90,7 @@ export function BoardView() {
         setAni1(true);
       })
       .catch()
-      .finally();
+      .finally(setIsLikeProcessing(false));
   }
 
   return (
@@ -95,31 +98,38 @@ export function BoardView() {
       <Flex>
         <Heading>{board.id}번 게시물</Heading>
         <Spacer />
-        <Flex>
-          <Box fontSize={"3xl"} onClick={handleClickLike}>
-            {like.like && (
-              <FontAwesomeIcon
-                onMouseLeave={() => setAni1(false)}
-                icon={fullHeart}
-                bounce={ani1}
-                style={{ color: "#B197FC" }}
-                cursor={"pointer"}
-              />
-            )}
-            {like.like || (
-              <FontAwesomeIcon
-                onMouseLeave={() => setAni1(false)}
-                icon={emptyHeart}
-                bounce={ani1}
-                style={{ color: "#B197FC" }}
-                cursor={"pointer"}
-              />
-            )}
+        {isLikeProcessing || (
+          <Flex>
+            <Box fontSize={"3xl"} onClick={handleClickLike}>
+              {like.like && (
+                <FontAwesomeIcon
+                  onMouseLeave={() => setAni1(false)}
+                  icon={fullHeart}
+                  bounce={ani1}
+                  style={{ color: "#B197FC" }}
+                  cursor={"pointer"}
+                />
+              )}
+              {like.like || (
+                <FontAwesomeIcon
+                  onMouseLeave={() => setAni1(false)}
+                  icon={emptyHeart}
+                  bounce={ani1}
+                  style={{ color: "#B197FC" }}
+                  cursor={"pointer"}
+                />
+              )}
+            </Box>
+            <Box ml={"10px"} fontSize={"3xl"}>
+              {like.count}
+            </Box>
+          </Flex>
+        )}
+        {isLikeProcessing && (
+          <Box pr={3}>
+            <Spinner color="#B197FC" />
           </Box>
-          <Box ml={"10px"} fontSize={"3xl"}>
-            {like.count}
-          </Box>
-        </Flex>
+        )}
       </Flex>
       <Box mt={"30px"}>
         <FormControl>
