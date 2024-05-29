@@ -5,8 +5,10 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   FormControl,
   FormLabel,
+  Heading,
   Image,
   Input,
   Modal,
@@ -15,10 +17,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spacer,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { LoginContext } from "../../component/LoginProvider.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";
 
 export function BoardView() {
   const { id } = useParams();
@@ -27,6 +33,8 @@ export function BoardView() {
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const account = useContext(LoginContext);
+  const [ani1, setAni1] = useState(false);
+  const [like, setLike] = useState({ like: false, count: 0 });
 
   useEffect(() => {
     axios
@@ -73,8 +81,40 @@ export function BoardView() {
 
   return (
     <Box mt={"30px"}>
-      <Box>{board.id}번 게시물</Box>
-      <Box>
+      <Flex>
+        <Heading>{board.id}번 게시물</Heading>
+        <Spacer />
+        <Flex>
+          <Box
+            fontSize={"3xl"}
+            onClick={() => {
+              setLike({ ...like, like: !like.like });
+              setAni1(true);
+            }}
+          >
+            {like.like && (
+              <FontAwesomeIcon
+                onMouseLeave={() => setAni1(false)}
+                icon={fullHeart}
+                bounce={ani1}
+                style={{ color: "#B197FC" }}
+                cursor={"pointer"}
+              />
+            )}
+            {like.like || (
+              <FontAwesomeIcon
+                onMouseLeave={() => setAni1(false)}
+                icon={emptyHeart}
+                bounce={ani1}
+                style={{ color: "#B197FC" }}
+                cursor={"pointer"}
+              />
+            )}
+          </Box>
+          <Box fontSize={"3xl"}>{like.count}</Box>
+        </Flex>
+      </Flex>
+      <Box mt={"30px"}>
         <FormControl>
           <FormLabel>제목</FormLabel>
           <Input value={board.title} readOnly />
@@ -104,6 +144,7 @@ export function BoardView() {
               </Box>
             ))}
         </Box>
+
         <Box mt={"30px"}>
           <FormControl>
             <FormLabel>작성자</FormLabel>

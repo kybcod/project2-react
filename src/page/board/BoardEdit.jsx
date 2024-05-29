@@ -135,7 +135,7 @@ export function BoardEdit() {
           {board.fileList &&
             board.fileList.map((file) => (
               <Box
-                boxSize={"210px"}
+                boxSize={"220px"}
                 border={"2px solid black"}
                 m={3}
                 key={file.name}
