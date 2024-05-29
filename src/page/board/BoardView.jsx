@@ -79,19 +79,24 @@ export function BoardView() {
   //   return <Spinner />;
   // }
 
+  function handleClickLike() {
+    axios
+      .put(`/api/board/like`, { boardId: board.id })
+      .then((res) => {
+        setLike(res.data);
+        setAni1(true);
+      })
+      .catch()
+      .finally();
+  }
+
   return (
     <Box mt={"30px"}>
       <Flex>
         <Heading>{board.id}번 게시물</Heading>
         <Spacer />
         <Flex>
-          <Box
-            fontSize={"3xl"}
-            onClick={() => {
-              setLike({ ...like, like: !like.like });
-              setAni1(true);
-            }}
-          >
+          <Box fontSize={"3xl"} onClick={handleClickLike}>
             {like.like && (
               <FontAwesomeIcon
                 onMouseLeave={() => setAni1(false)}
@@ -111,7 +116,9 @@ export function BoardView() {
               />
             )}
           </Box>
-          <Box fontSize={"3xl"}>{like.count}</Box>
+          <Box ml={"10px"} fontSize={"3xl"}>
+            {like.count}
+          </Box>
         </Flex>
       </Flex>
       <Box mt={"30px"}>
