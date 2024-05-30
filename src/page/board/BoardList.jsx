@@ -20,6 +20,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faHeart,
   faImages,
   faMagnifyingGlass,
   faUserPen,
@@ -82,6 +83,9 @@ export function BoardList() {
                 <Th>NO</Th>
                 <Th>제목</Th>
                 <Th>
+                  <FontAwesomeIcon icon={faHeart} />
+                </Th>
+                <Th>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>
               </Tr>
@@ -104,6 +108,7 @@ export function BoardList() {
                       </Badge>
                     )}
                   </Td>
+                  <Td>{board.numberOfLike}</Td>
                   <Td>{board.writer}</Td>
                 </Tr>
               ))}
