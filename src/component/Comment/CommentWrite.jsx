@@ -1,21 +1,33 @@
-import { Box, Button, Textarea } from "@chakra-ui/react";
+import { Box, Button, Textarea, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function CommentWrite({ boardId }) {
+export function CommentWrite({ boardId, isSending, setIsSending }) {
   const [comment, setComment] = useState("");
+  const toast = useToast();
 
   function handleCommentSubmitClick() {
+    setIsSending(true); //전송 중
     axios
       .post("/api/comment/add", {
         boardId,
         comment,
       })
-      .then((res) => {})
+      .then((res) => {
+        setComment("");
+        toast({
+          description: "댓글이 등록되었습니다.",
+          position: "top",
+          status: "success",
+          duration: 1000,
+        });
+      })
       .catch(() => {})
-      .finally(() => {});
+      .finally(() => {
+        setIsSending(false); //전송 끝남
+      });
   }
 
   return (
@@ -25,7 +37,11 @@ export function CommentWrite({ boardId }) {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <Button onClick={handleCommentSubmitClick} colorScheme={"blue"}>
+      <Button
+        isLoading={isSending}
+        onClick={handleCommentSubmitClick}
+        colorScheme={"blue"}
+      >
         <FontAwesomeIcon icon={faPaperPlane} />
       </Button>
     </Box>
