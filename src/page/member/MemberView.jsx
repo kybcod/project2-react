@@ -70,9 +70,6 @@ export function MemberView() {
     setIsLoading(true);
     axios
       .delete(`/api/member/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
         data: { id, password },
       })
       .then((res) => {

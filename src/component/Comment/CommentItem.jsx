@@ -1,20 +1,29 @@
-import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, Spacer, useToast } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
-export function CommentItem({ comment }) {
+export function CommentItem({ comment, isProcessing, setIsProcessing }) {
+  const toast = useToast();
+
   function handleRemoveClick() {
+    setIsProcessing(true);
     axios
       .delete(`/api/comment/remove`, {
         data: { id: comment.id },
       })
-      .then((res) => {})
+      .then((res) => {
+        toast({
+          description: "댓글이 삭제되었습니다.",
+          position: "top",
+          status: "success",
+          duration: 1000,
+        });
+      })
       .catch()
-      .finally();
+      .finally(() => setIsProcessing(false));
   }
 
-  console.log(comment);
   return (
     <Box>
       <Box border={"1px solid black"} my={3}>
@@ -27,7 +36,11 @@ export function CommentItem({ comment }) {
           <Box>{comment.comment}</Box>
           <Spacer />
           <Box>
-            <Button colorScheme="red" onClick={handleRemoveClick}>
+            <Button
+              isLoading={isProcessing}
+              colorScheme="red"
+              onClick={handleRemoveClick}
+            >
               <FontAwesomeIcon icon={faTrashCan} />
             </Button>
           </Box>
