@@ -31,7 +31,7 @@ import { CommentComponent } from "../../component/Comment/CommentComponent.jsx";
 
 export function BoardView() {
   const { id } = useParams();
-  const [board, setBoard] = useState({});
+  const [board, setBoard] = useState(null);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -82,9 +82,9 @@ export function BoardView() {
       });
   }
 
-  // if (board === null) {
-  //   return <Spinner />;
-  // }
+  if (board === null) {
+    return <Spinner />;
+  }
 
   function handleClickLike() {
     if (!account.isLoggedIn()) {
@@ -203,6 +203,7 @@ export function BoardView() {
         )}
 
         <CommentComponent boardId={board.id} />
+
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>

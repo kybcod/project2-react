@@ -8,7 +8,9 @@ export function CommentList({ boardId }) {
   useEffect(() => {
     axios
       .get(`/api/comment/list/${boardId}`)
-      .then((res) => {})
+      .then((res) => {
+        setCommentList(res.data);
+      })
       .catch((err) => console.log(err))
       .finally();
   }, []);
