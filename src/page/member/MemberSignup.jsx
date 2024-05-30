@@ -157,13 +157,10 @@ export function MemberSignup() {
         <Box mt={"30px"}>
           <FormControl>
             <FormLabel>프로필 사진</FormLabel>
-            <Box borderRadius={"full"} mt={"30px"}>
+            <Box borderRadius="full" mt={"30px"}>
               {filePreview && <Image boxSize={"180px"} src={filePreview} />}
               {filePreview || (
-                <Image
-                  boxSize={"180px"}
-                  src={"C:/Downloads/original_profile.jpg"}
-                />
+                <Image boxSize={"180px"} src={"C:/Temp/original_profile.jpg"} />
               )}
             </Box>
             <Input
