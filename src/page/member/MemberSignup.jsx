@@ -26,6 +26,7 @@ export function MemberSignup() {
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
 
   function handleMemberSaveClick() {
     setIsLoading(true);
@@ -140,12 +141,41 @@ export function MemberSignup() {
 
   const isCheckPassword = password === passwordCheck;
 
-  let filePath;
+  function handleChangeProFile(e) {
+    const fileView = e.target.files[0];
+    setFile(fileView);
+    if (fileView) {
+      setFilePreview(URL.createObjectURL(fileView));
+    } else {
+      setFilePreview(null);
+    }
+  }
 
   return (
     <Box mt={"30px"}>
       <Box>
-        <Box>
+        <Box mt={"30px"}>
+          <FormControl>
+            <FormLabel>프로필 사진</FormLabel>
+            <Box borderRadius={"full"} mt={"30px"}>
+              {filePreview && <Image boxSize={"180px"} src={filePreview} />}
+              {filePreview || (
+                <Image
+                  boxSize={"180px"}
+                  src={"C:/Downloads/original_profile.jpg"}
+                />
+              )}
+            </Box>
+            <Input
+              mt={"10px"}
+              type={"file"}
+              accept={"image/*"}
+              onChange={handleChangeProFile}
+            />
+          </FormControl>
+        </Box>
+
+        <Box mt={"30px"}>
           <FormControl>
             <FormLabel>이메일</FormLabel>
             <InputGroup>
@@ -222,21 +252,6 @@ export function MemberSignup() {
                 닉네임 중복확인 해주세요.
               </FormHelperText>
             )}
-          </FormControl>
-        </Box>
-
-        <Box mt={"30px"}>
-          <FormControl>
-            <FormLabel>프로필 사진</FormLabel>
-            <Box mt={"30px"}>
-              <Image boxSize={"180px"} />
-            </Box>
-            <Input
-              mt={"10px"}
-              type={"file"}
-              accept={"image/*"}
-              onChange={(e) => setFile(e.target.files[0])}
-            />
           </FormControl>
         </Box>
 
