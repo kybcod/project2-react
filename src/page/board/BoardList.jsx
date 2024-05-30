@@ -39,6 +39,7 @@ export function BoardList() {
 
   useEffect(() => {
     axios.get(`/api/board/list?${searchParams}`).then((res) => {
+      console.log(res.data.boardList);
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
@@ -72,6 +73,8 @@ export function BoardList() {
     navigate(`/?${searchParams}`);
   }
 
+  console.log(boardList);
+
   return (
     <Box mt={"30px"}>
       <Box>게시물 목록</Box>
@@ -86,6 +89,7 @@ export function BoardList() {
                 <Th>
                   <FontAwesomeIcon icon={faHeart} />
                 </Th>
+                <Th>조회수</Th>
                 <Th>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>
@@ -116,6 +120,7 @@ export function BoardList() {
                     )}
                   </Td>
                   <Td>{board.numberOfLike}</Td>
+                  <Td>{board.view}</Td>
                   <Td>{board.writer}</Td>
                 </Tr>
               ))}
