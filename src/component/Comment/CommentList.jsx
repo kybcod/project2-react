@@ -25,6 +25,7 @@ export function CommentList({ boardId, isSending }) {
       {commentList.map((comment) => (
         <Box key={comment.id} border={"1px solid black"} my={3}>
           <Box>{comment.memberId}</Box>
+          <Box>{comment.nickName}</Box>
           <Spacer />
           <Box>{comment.inserted}</Box>
           <Box>{comment.comment}</Box>
