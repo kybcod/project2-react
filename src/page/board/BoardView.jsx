@@ -19,6 +19,7 @@ import {
   ModalOverlay,
   Spacer,
   Spinner,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -85,6 +86,9 @@ export function BoardView() {
   // }
 
   function handleClickLike() {
+    if (!account.isLoggedIn()) {
+      return;
+    }
     setIsLikeProcessing(true);
     axios
       .put(`/api/board/like`, { boardId: board.id })
@@ -103,26 +107,32 @@ export function BoardView() {
         <Spacer />
         {isLikeProcessing || (
           <Flex>
-            <Box fontSize={"3xl"} onClick={handleClickLike}>
-              {like.like && (
-                <FontAwesomeIcon
-                  onMouseLeave={() => setAni1(false)}
-                  icon={fullHeart}
-                  bounce={ani1}
-                  style={{ color: "#B197FC" }}
-                  cursor={"pointer"}
-                />
-              )}
-              {like.like || (
-                <FontAwesomeIcon
-                  onMouseLeave={() => setAni1(false)}
-                  icon={emptyHeart}
-                  bounce={ani1}
-                  style={{ color: "#B197FC" }}
-                  cursor={"pointer"}
-                />
-              )}
-            </Box>
+            <Tooltip
+              isDisabled={account.isLoggedIn()}
+              hasArrow
+              label={"로그인 해주세요"}
+            >
+              <Box fontSize={"3xl"} cursor="pointer" onClick={handleClickLike}>
+                {like.like && (
+                  <FontAwesomeIcon
+                    onMouseLeave={() => setAni1(false)}
+                    icon={fullHeart}
+                    bounce={ani1}
+                    style={{ color: "#B197FC" }}
+                    cursor={"pointer"}
+                  />
+                )}
+                {like.like || (
+                  <FontAwesomeIcon
+                    onMouseLeave={() => setAni1(false)}
+                    icon={emptyHeart}
+                    bounce={ani1}
+                    style={{ color: "#B197FC" }}
+                    cursor={"pointer"}
+                  />
+                )}
+              </Box>
+            </Tooltip>
             <Box ml={"10px"} fontSize={"3xl"}>
               {like.count}
             </Box>
