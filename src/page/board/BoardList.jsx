@@ -123,7 +123,7 @@ export function BoardList() {
                           <Box>
                             <FontAwesomeIcon icon={faComments} />
                           </Box>
-                          <Box>{board.numberOfComments}</Box>
+                          <Box>{board.numberOfComment}</Box>
                         </Flex>
                       </Badge>
                     )}

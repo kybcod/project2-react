@@ -27,7 +27,7 @@ export function MemberSignup() {
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState([]);
   const [filePreview, setFilePreview] = useState("/img/original_profile.jpg");
 
   function handleMemberSaveClick() {
@@ -163,7 +163,7 @@ export function MemberSignup() {
           <Box mb={7}>
             <FormControl>
               <FormLabel>프로필 사진</FormLabel>
-              <Box borderRadius="full" mt={"30px"}>
+              <Box mt={"30px"}>
                 <Image boxSize={"180px"} src={filePreview} />
               </Box>
               <Input

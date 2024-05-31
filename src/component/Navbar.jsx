@@ -1,10 +1,26 @@
 import { useNavigate } from "react-router-dom";
-import { Button, ButtonGroup, Center, Flex, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Center,
+  Flex,
+  Hide,
+  Show,
+  Spacer,
+} from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faPencil,
+  faRightFromBracket,
+  faRightToBracket,
+  faUserPlus,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const [ani1, setAni1] = useState(false);
@@ -32,13 +48,16 @@ export function Navbar() {
         fontSize={20}
         fontWeight={600}
       >
-        <FontAwesomeIcon
-          style={{ fontSize: "30px" }}
-          onMouseOver={() => setAni1(true)}
-          onMouseLeave={() => setAni1(false)}
-          icon={faHouse}
-          beatFade={ani1}
-        />
+        <Show below={"lg"}>
+          <FontAwesomeIcon
+            style={{ fontSize: "30px" }}
+            onMouseOver={() => setAni1(true)}
+            onMouseLeave={() => setAni1(false)}
+            icon={faHouse}
+            beatFade={ani1}
+          />
+        </Show>
+        <Hide below={"lg"}>HOME</Hide>
       </Center>
       {account.isLoggedIn() && (
         <Center
@@ -49,7 +68,10 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          글쓰기
+          <Show below={"lg"}>
+            <FontAwesomeIcon icon={faPencil} />
+          </Show>
+          <Hide below={"lg"}>글쓰기</Hide>
         </Center>
       )}
 
@@ -64,8 +86,14 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          <FontAwesomeIcon icon={faUser} />
-          {account.nickName}
+          <Flex gap={2}>
+            <Box>
+              <FontAwesomeIcon icon={faUser} />
+            </Box>
+            <Box>
+              <Hide below={"lg"}>{account.nickName}</Hide>
+            </Box>
+          </Flex>
         </Center>
       )}
 
@@ -74,11 +102,11 @@ export function Navbar() {
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
           _hover={{ bgColor: "blue.300" }}
-          p={8}
+          p={6}
           fontSize={20}
           fontWeight={600}
         >
-          회원목록
+          <FontAwesomeIcon icon={faUsers} />
         </Center>
       )}
 
@@ -94,7 +122,7 @@ export function Navbar() {
               fontSize={20}
               fontWeight={600}
             >
-              회원가입
+              <FontAwesomeIcon icon={faUserPlus} />
             </Button>
           )}
           {account.isLoggedIn() || (
@@ -107,7 +135,7 @@ export function Navbar() {
               fontSize={20}
               fontWeight={600}
             >
-              로그인
+              <FontAwesomeIcon icon={faRightToBracket} />
             </Button>
           )}
           {account.isLoggedIn() && (
@@ -123,7 +151,7 @@ export function Navbar() {
               fontSize={20}
               fontWeight={600}
             >
-              로그아웃
+              <FontAwesomeIcon icon={faRightFromBracket} />
             </Button>
           )}
         </ButtonGroup>
