@@ -74,8 +74,6 @@ export function BoardList() {
     navigate(`/?${searchParams}`);
   }
 
-  console.log(boardList);
-
   return (
     <Box mb={10}>
       <Box mb={10}>
@@ -92,7 +90,7 @@ export function BoardList() {
                 <Th w={20}>
                   <FontAwesomeIcon icon={faHeart} />
                 </Th>
-                <Th w={20}>조회수</Th>
+                <Th w={40}>조회수</Th>
                 <Th w={40}>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>

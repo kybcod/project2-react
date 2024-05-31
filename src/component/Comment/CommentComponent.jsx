@@ -9,15 +9,19 @@ export function CommentComponent({ boardId }) {
   const [isProcessing, setIsProcessing] = useState(false); // 전송상태
 
   return (
-    <Box mb={7}>
-      <Heading>
-        <FontAwesomeIcon icon={faComments} /> COMMENTS
-      </Heading>
-      <CommentWrite
-        boardId={boardId}
-        isProcessing={isProcessing}
-        setIsProcessing={setIsProcessing}
-      />
+    <Box>
+      <Box mb={7}>
+        <Heading>
+          <FontAwesomeIcon icon={faComments} /> COMMENTS
+        </Heading>
+      </Box>
+      <Box mb={7}>
+        <CommentWrite
+          boardId={boardId}
+          isProcessing={isProcessing}
+          setIsProcessing={setIsProcessing}
+        />
+      </Box>
       <CommentList
         boardId={boardId}
         setIsProcessing={setIsProcessing}
