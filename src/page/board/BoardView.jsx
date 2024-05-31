@@ -4,7 +4,8 @@ import axios from "axios";
 import {
   Box,
   Button,
-  Center,
+  Card,
+  CardBody,
   Flex,
   FormControl,
   FormLabel,
@@ -103,103 +104,105 @@ export function BoardView() {
 
   return (
     <Box mt={"30px"}>
-      <Flex>
-        <Heading>{board.id}번 게시물</Heading>
-        <Spacer />
-        {isLikeProcessing || (
-          <Flex>
-            <Tooltip
-              isDisabled={account.isLoggedIn()}
-              hasArrow
-              label={"로그인 해주세요"}
-            >
-              <Box fontSize={"3xl"} cursor="pointer" onClick={handleClickLike}>
-                {like.like && (
-                  <FontAwesomeIcon
-                    onMouseLeave={() => setAni1(false)}
-                    icon={fullHeart}
-                    bounce={ani1}
-                    style={{ color: "#B197FC" }}
-                    cursor={"pointer"}
-                  />
-                )}
-                {like.like || (
-                  <FontAwesomeIcon
-                    onMouseLeave={() => setAni1(false)}
-                    icon={emptyHeart}
-                    bounce={ani1}
-                    style={{ color: "#B197FC" }}
-                    cursor={"pointer"}
-                  />
-                )}
+      <Box mb={10}>
+        <Flex>
+          <Heading mb={7}>{board.id}번 게시물</Heading>
+          <Spacer />
+          {isLikeProcessing || (
+            <Flex>
+              <Tooltip
+                isDisabled={account.isLoggedIn()}
+                hasArrow
+                label={"로그인 해주세요"}
+              >
+                <Box
+                  fontSize={"3xl"}
+                  cursor="pointer"
+                  onClick={handleClickLike}
+                >
+                  {like.like && (
+                    <FontAwesomeIcon
+                      onMouseLeave={() => setAni1(false)}
+                      icon={fullHeart}
+                      bounce={ani1}
+                      style={{ color: "#B197FC" }}
+                      cursor={"pointer"}
+                    />
+                  )}
+                  {like.like || (
+                    <FontAwesomeIcon
+                      onMouseLeave={() => setAni1(false)}
+                      icon={emptyHeart}
+                      bounce={ani1}
+                      style={{ color: "#B197FC" }}
+                      cursor={"pointer"}
+                    />
+                  )}
+                </Box>
+              </Tooltip>
+              <Box mx={3} fontSize="3xl">
+                >{like.count}
               </Box>
-            </Tooltip>
-            <Box ml={"10px"} fontSize={"3xl"}>
-              {like.count}
+            </Flex>
+          )}
+          {isLikeProcessing && (
+            <Box pr={3}>
+              <Spinner color="#B197FC" />
             </Box>
-          </Flex>
-        )}
-        {isLikeProcessing && (
-          <Box pr={3}>
-            <Spinner color="#B197FC" />
-          </Box>
-        )}
-      </Flex>
-      <Box mt={"30px"}>
+          )}
+        </Flex>
+      </Box>
+
+      <Box mb={7}>
         <FormControl>
           <FormLabel>제목</FormLabel>
           <Input value={board.title} readOnly />
         </FormControl>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Input value={board.content} readOnly />
           </FormControl>
         </Box>
-        <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
-          {board.fileList &&
-            board.fileList.map((file) => (
-              <Box
-                boxSize={"190px"}
-                border={"2px solid black"}
-                m={3}
-                key={file.name}
-              >
-                <Center>
-                  <Image
-                    borderRadius={"full"}
-                    boxSize={"180px"}
-                    src={file.src}
-                  />
-                </Center>
-              </Box>
-            ))}
+        <Box mb={7}>
+          <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
+            {board.fileList &&
+              board.fileList.map((file) => (
+                <Card boxSize={"190px"} m={3} key={file.name}>
+                  <CardBody>
+                    <Image w={"100%"} boxSize={"180px"} src={file.src} />
+                  </CardBody>
+                </Card>
+              ))}
+          </Box>
         </Box>
 
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input value={board.writer} readOnly />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mmb={7}>
           <FormControl>
             <FormLabel>작성일시</FormLabel>
             <Input type={"datetime-local"} value={board.inserted} readOnly />
           </FormControl>
         </Box>
         {account.hasAccess(board.memberId) && (
-          <Box mt={"30px"}>
-            <Button
-              colorScheme={"purple"}
-              onClick={() => navigate(`/edit/${board.id}`)}
-            >
-              수정
-            </Button>
-            <Button colorScheme={"red"} onClick={onOpen}>
-              삭제
-            </Button>
-          </Box>
+          <Flex mb={7} gap={2}>
+            <Box mt={"30px"}>
+              <Button
+                colorScheme={"purple"}
+                onClick={() => navigate(`/edit/${board.id}`)}
+              >
+                수정
+              </Button>
+              <Button colorScheme={"red"} onClick={onOpen}>
+                삭제
+              </Button>
+            </Box>
+          </Flex>
         )}
 
         <CommentComponent boardId={board.id} />
@@ -210,10 +213,12 @@ export function BoardView() {
             <ModalHeader></ModalHeader>
             <ModalBody>정말로 삭제하시겠습니까?</ModalBody>
             <ModalFooter>
-              <Button onClick={onClose}>취소</Button>
-              <Button colorScheme={"red"} onClick={handleClickRemove}>
-                확인
-              </Button>
+              <Flex gap={2}>
+                <Button onClick={onClose}>취소</Button>
+                <Button colorScheme={"red"} onClick={handleClickRemove}>
+                  확인
+                </Button>
+              </Flex>
             </ModalFooter>
           </ModalContent>
         </Modal>
