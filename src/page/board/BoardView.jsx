@@ -141,7 +141,7 @@ export function BoardView() {
                 </Box>
               </Tooltip>
               <Box mx={3} fontSize="3xl">
-                >{like.count}
+                {like.count}
               </Box>
             </Flex>
           )}
@@ -205,7 +205,9 @@ export function BoardView() {
           </Flex>
         )}
 
-        <CommentComponent boardId={board.id} />
+        <Box mb={20}>
+          <CommentComponent boardId={board.id} />
+        </Box>
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />

@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -48,9 +49,11 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
 
   return (
     <Box>
-      <Box border={"1px solid black"} my={3}>
+      <Box>
         <Flex>
-          <Box>{comment.nickName}</Box>
+          <Text>
+            <Box>{comment.nickName}</Box>
+          </Text>
           <Spacer />
           <Box>{comment.inserted}</Box>
         </Flex>
