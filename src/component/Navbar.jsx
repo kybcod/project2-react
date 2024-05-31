@@ -21,12 +21,13 @@ export function Navbar() {
         base: 0,
       }}
       height={20}
-      bgColor="gray.300"
+      bgColor="blue.900"
+      color="white"
     >
       <Center
         onClick={() => navigate("/")}
         cursor={"pointer"}
-        _hover={{ bgColor: "gray.200" }}
+        _hover={{ bgColor: "blue.300" }}
         p={8}
         fontSize={20}
         fontWeight={600}
@@ -43,7 +44,7 @@ export function Navbar() {
         <Center
           onClick={() => navigate("/write")}
           cursor={"pointer"}
-          _hover={{ bgColor: "gray.200" }}
+          _hover={{ bgColor: "blue.300" }}
           p={8}
           fontSize={20}
           fontWeight={600}
@@ -55,7 +56,7 @@ export function Navbar() {
         <Center
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
-          _hover={{ bgColor: "gray.200" }}
+          _hover={{ bgColor: "blue.300" }}
         >
           회원목록
         </Center>
@@ -67,7 +68,7 @@ export function Navbar() {
         <Center
           onClick={() => navigate(`/member/${account.id}`)}
           cursor={"pointer"}
-          _hover={{ bgColor: "gray.200" }}
+          _hover={{ bgColor: "blue.300" }}
           p={8}
           fontSize={20}
           fontWeight={600}
@@ -83,7 +84,7 @@ export function Navbar() {
             <Button
               onClick={() => navigate("/signup")}
               cursor={"pointer"}
-              _hover={{ bgColor: "gray.200" }}
+              _hover={{ bgColor: "blue.300" }}
               colorScheme="gray"
               p={6}
               fontSize={20}
@@ -96,7 +97,7 @@ export function Navbar() {
             <Button
               onClick={() => navigate("/login")}
               cursor={"pointer"}
-              _hover={{ bgColor: "gray.200" }}
+              _hover={{ bgColor: "blue.300" }}
               colorScheme="gray"
               p={6}
               fontSize={20}
@@ -112,7 +113,7 @@ export function Navbar() {
                 navigate("/login");
               }}
               cursor={"pointer"}
-              _hover={{ bgColor: "gray.200" }}
+              _hover={{ bgColor: "blue.300" }}
               colorScheme="gray"
               p={4}
               fontSize={20}

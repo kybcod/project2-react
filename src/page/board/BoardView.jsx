@@ -183,7 +183,7 @@ export function BoardView() {
             <Input value={board.writer} readOnly />
           </FormControl>
         </Box>
-        <Box mmb={7}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>작성일시</FormLabel>
             <Input type={"datetime-local"} value={board.inserted} readOnly />

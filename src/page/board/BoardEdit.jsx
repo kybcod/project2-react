@@ -10,6 +10,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Image,
   Input,
   Modal,
@@ -110,10 +111,12 @@ export function BoardEdit() {
   }
 
   return (
-    <Box mt={"30px"}>
-      <Box>{board.id}번 게시물 수정</Box>
+    <Box>
+      <Box mb={10}>
+        <Heading>{board.id}번 게시물 수정</Heading>
+      </Box>
       <Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>제목</FormLabel>
             <Input
@@ -122,7 +125,7 @@ export function BoardEdit() {
             />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea
@@ -172,7 +175,7 @@ export function BoardEdit() {
             ))}
         </Box>
 
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>파일</FormLabel>
             <Input
@@ -191,13 +194,13 @@ export function BoardEdit() {
         <Box>
           <ul>{fileNameList}</ul>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input defaultValue={board.writer} readOnly />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <Button w={"100px"} colorScheme={"green"} onClick={onOpen}>
             저장
           </Button>
