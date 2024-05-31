@@ -92,7 +92,7 @@ export function BoardList() {
                 <Th w={20}>
                   <FontAwesomeIcon icon={faHeart} />
                 </Th>
-                <Th>조회수</Th>
+                <Th w={20}>조회수</Th>
                 <Th w={40}>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>

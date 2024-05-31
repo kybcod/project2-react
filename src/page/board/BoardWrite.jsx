@@ -1,10 +1,17 @@
 import {
   Box,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
+  Stack,
+  StackDivider,
+  Text,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
@@ -66,25 +73,32 @@ export function BoardWrite() {
   // file 목록 작성
   const fileNameList = [];
   for (let i = 0; i < files.length; i++) {
-    fileNameList.push(<li>{files[i].name}</li>);
+    fileNameList.push(
+      <Box>
+        <Text size={"md"}>{files[i].name}</Text>
+      </Box>,
+    );
   }
 
   return (
-    <Box mt={"30px"}>
+    <Box>
+      <Box mb={10}>
+        <Heading>글 작성 화면</Heading>
+      </Box>
       <Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>제목</FormLabel>
             <Input onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>파일</FormLabel>
             <Input
@@ -100,16 +114,27 @@ export function BoardWrite() {
             </FormHelperText>
           </FormControl>
         </Box>
-        <Box>
-          <ul>{fileNameList}</ul>
-        </Box>
-        <Box mt={"30px"}>
+        {fileNameList.length > 0 && (
+          <Box mb={7}>
+            <Card>
+              <CardHeader>
+                <Heading size={"md"}>선택된 파일 목록</Heading>
+              </CardHeader>
+              <CardBody>
+                <Stack divider={<StackDivider />} spacing={4}>
+                  {fileNameList}
+                </Stack>
+              </CardBody>
+            </Card>
+          </Box>
+        )}
+        <Box mb={7}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={7}>
           <Button
             w={"100px"}
             isLoading={loading}
