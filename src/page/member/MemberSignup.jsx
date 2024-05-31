@@ -26,7 +26,7 @@ export function MemberSignup() {
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [file, setFile] = useState(null);
-  const [filePreview, setFilePreview] = useState(null);
+  const [filePreview, setFilePreview] = useState("/img/original_profile.jpg");
 
   function handleMemberSaveClick() {
     setIsLoading(true);
@@ -147,7 +147,7 @@ export function MemberSignup() {
     if (fileView) {
       setFilePreview(URL.createObjectURL(fileView));
     } else {
-      setFilePreview(null);
+      setFilePreview("/img/original_profile.jpg");
     }
   }
 
@@ -158,10 +158,7 @@ export function MemberSignup() {
           <FormControl>
             <FormLabel>프로필 사진</FormLabel>
             <Box borderRadius="full" mt={"30px"}>
-              {filePreview && <Image boxSize={"180px"} src={filePreview} />}
-              {filePreview || (
-                <Image boxSize={"180px"} src="/img/original_profile.jpg" />
-              )}
+              <Image boxSize={"180px"} src={filePreview} />
             </Box>
             <Input
               mt={"10px"}
