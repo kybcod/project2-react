@@ -4,6 +4,7 @@ import {
   Button,
   Center,
   Flex,
+  Heading,
   Input,
   Select,
   Table,
@@ -76,21 +77,23 @@ export function BoardList() {
   console.log(boardList);
 
   return (
-    <Box mt={"30px"}>
-      <Box>게시물 목록</Box>
-      <Box>
+    <Box mb={10}>
+      <Box mb={10}>
+        <Heading>게시물 목록</Heading>
+      </Box>
+      <Box mb={10}>
         {boardList.length === 0 && <Center>조회된 결과가 없습니다.</Center>}
         {boardList.length > 0 && (
           <Table>
             <Thead>
               <Tr>
-                <Th>NO</Th>
+                <Th w={20}>NO</Th>
                 <Th>제목</Th>
-                <Th>
+                <Th w={20}>
                   <FontAwesomeIcon icon={faHeart} />
                 </Th>
                 <Th>조회수</Th>
-                <Th>
+                <Th w={40}>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>
               </Tr>
@@ -130,9 +133,9 @@ export function BoardList() {
       </Box>
 
       {/*검색*/}
-      <Center>
+      <Center mb={10}>
         <Box mt={"30px"}>
-          <Flex>
+          <Flex gap={1}>
             <Box>
               <Select
                 value={searchType}
@@ -150,7 +153,7 @@ export function BoardList() {
                 placeholder={"검색어를 입력하세요."}
               />
             </Box>
-            <Box>
+            <Box gap={1}>
               <Button onClick={handleSearchClick}>
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </Button>
@@ -161,51 +164,53 @@ export function BoardList() {
 
       {/*페이지네이션*/}
       <Center>
-        <Box mt={"30px"}>
-          {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
-          {pageInfo.prevPageNumber && (
-            <>
-              <Button onClick={() => handlePageButtonClick(1)}>
-                <FontAwesomeIcon icon={faAnglesLeft} />
-              </Button>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </Button>
-            </>
-          )}
+        <Flex gap={1}>
+          <Box mt={"30px"}>
+            {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
+            {pageInfo.prevPageNumber && (
+              <>
+                <Button onClick={() => handlePageButtonClick(1)}>
+                  <FontAwesomeIcon icon={faAnglesLeft} />
+                </Button>
+                <Button
+                  onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
+                >
+                  <FontAwesomeIcon icon={faAngleLeft} />
+                </Button>
+              </>
+            )}
 
-          {/*페이지 번호*/}
-          {pageNumbers.map((pageNumber) => (
-            <Button
-              mr={"10px"}
-              onClick={() => handlePageButtonClick(pageNumber)}
-              key={pageNumber}
-              colorScheme={
-                pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
-              }
-            >
-              {pageNumber}
-            </Button>
-          ))}
+            {/*페이지 번호*/}
+            {pageNumbers.map((pageNumber) => (
+              <Button
+                mr={"10px"}
+                onClick={() => handlePageButtonClick(pageNumber)}
+                key={pageNumber}
+                colorScheme={
+                  pageNumber == pageInfo.currentPageNumber ? "teal" : "gray"
+                }
+              >
+                {pageNumber}
+              </Button>
+            ))}
 
-          {/*만약 다음 버튼이 보이면 맨끝 버튼도 보인다. */}
-          {pageInfo.nextPageNumber && (
-            <>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </Button>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAnglesRight} />
-              </Button>
-            </>
-          )}
-        </Box>
+            {/*만약 다음 버튼이 보이면 맨끝 버튼도 보인다. */}
+            {pageInfo.nextPageNumber && (
+              <>
+                <Button
+                  onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
+                >
+                  <FontAwesomeIcon icon={faAngleRight} />
+                </Button>
+                <Button
+                  onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
+                >
+                  <FontAwesomeIcon icon={faAnglesRight} />
+                </Button>
+              </>
+            )}
+          </Box>
+        </Flex>
       </Center>
     </Box>
   );

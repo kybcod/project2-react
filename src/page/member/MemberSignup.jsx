@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Image,
   Input,
   InputGroup,
@@ -44,7 +46,7 @@ export function MemberSignup() {
           position: "bottom-right",
           duration: 2000,
         });
-        navigate("/"); //로그인 화면으로 이동 나중에 추가
+        navigate("/login"); //로그인 화면으로 이동 나중에 추가
       })
       .catch((err) => {
         const code = err.response.status;
@@ -152,24 +154,29 @@ export function MemberSignup() {
   }
 
   return (
-    <Box mt={"30px"}>
-      <Box>
-        <Box mt={"30px"}>
-          <FormControl>
-            <FormLabel>프로필 사진</FormLabel>
-            <Box borderRadius="full" mt={"30px"}>
-              <Image boxSize={"180px"} src={filePreview} />
-            </Box>
-            <Input
-              mt={"10px"}
-              type={"file"}
-              accept={"image/*"}
-              onChange={handleChangeProFile}
-            />
-          </FormControl>
+    <Center>
+      <Box w={500}>
+        <Box mb={10}>
+          <Heading>회원 가입</Heading>
+        </Box>
+        <Box>
+          <Box mb={7}>
+            <FormControl>
+              <FormLabel>프로필 사진</FormLabel>
+              <Box borderRadius="full" mt={"30px"}>
+                <Image boxSize={"180px"} src={filePreview} />
+              </Box>
+              <Input
+                mt={"10px"}
+                type={"file"}
+                accept={"image/*"}
+                onChange={handleChangeProFile}
+              />
+            </FormControl>
+          </Box>
         </Box>
 
-        <Box mt={"30px"}>
+        <Box mb={70}>
           <FormControl>
             <FormLabel>이메일</FormLabel>
             <InputGroup>
@@ -202,13 +209,13 @@ export function MemberSignup() {
             )}
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={70}>
           <FormControl>
             <FormLabel>패스워드</FormLabel>
             <Input onChange={(e) => setPassword(e.target.value)} />
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={70}>
           <FormControl>
             <FormLabel>패스워드 확인</FormLabel>
             <Input onChange={(e) => setPasswordCheck(e.target.value)} />
@@ -219,7 +226,7 @@ export function MemberSignup() {
             )}
           </FormControl>
         </Box>
-        <Box mt={"30px"}>
+        <Box mb={70}>
           <FormControl>
             <FormLabel>닉네임</FormLabel>
             <InputGroup>
@@ -249,7 +256,7 @@ export function MemberSignup() {
           </FormControl>
         </Box>
 
-        <Box mt={"30px"}>
+        <Box mb={70}>
           <Button
             isDisabled={isDisabled}
             isLoading={isLoading}
@@ -260,6 +267,6 @@ export function MemberSignup() {
           </Button>
         </Box>
       </Box>
-    </Box>
+    </Center>
   );
 }

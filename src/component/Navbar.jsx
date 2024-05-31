@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react";
+import { Button, ButtonGroup, Center, Flex, Spacer } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,86 +12,117 @@ export function Navbar() {
   const account = useContext(LoginContext);
 
   return (
-    <Flex minWidth="max-content" alignItems="center" gap="3">
-      <Box
+    <Flex
+      minWidth="max-content"
+      alignItems="center"
+      gap="3"
+      px={{
+        lg: 200,
+        base: 0,
+      }}
+      height={20}
+      bgColor="gray.300"
+    >
+      <Center
         onClick={() => navigate("/")}
         cursor={"pointer"}
         _hover={{ bgColor: "gray.200" }}
+        p={8}
+        fontSize={20}
+        fontWeight={600}
       >
         <FontAwesomeIcon
+          style={{ fontSize: "30px" }}
           onMouseOver={() => setAni1(true)}
           onMouseLeave={() => setAni1(false)}
           icon={faHouse}
           beatFade={ani1}
         />
-      </Box>
+      </Center>
       {account.isLoggedIn() && (
-        <Box
+        <Center
           onClick={() => navigate("/write")}
           cursor={"pointer"}
           _hover={{ bgColor: "gray.200" }}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
         >
           글쓰기
-        </Box>
+        </Center>
       )}
       {account.isAdmin() && (
-        <Box
+        <Center
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
           _hover={{ bgColor: "gray.200" }}
         >
           회원목록
-        </Box>
+        </Center>
       )}
 
       <Spacer />
       {/*아이콘 */}
       {account.isLoggedIn() && (
-        <Box
+        <Center
           onClick={() => navigate(`/member/${account.id}`)}
           cursor={"pointer"}
           _hover={{ bgColor: "gray.200" }}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
         >
           <FontAwesomeIcon icon={faUser} />
           {account.nickName}
-        </Box>
+        </Center>
       )}
 
-      <ButtonGroup gap="1">
-        {account.isLoggedIn() || (
-          <Button
-            onClick={() => navigate("/signup")}
-            cursor={"pointer"}
-            _hover={{ bgColor: "gray.200" }}
-            colorScheme="teal"
-          >
-            회원가입
-          </Button>
-        )}
-        {account.isLoggedIn() || (
-          <Button
-            onClick={() => navigate("/login")}
-            cursor={"pointer"}
-            _hover={{ bgColor: "gray.200" }}
-            colorScheme="teal"
-          >
-            로그인
-          </Button>
-        )}
-        {account.isLoggedIn() && (
-          <Button
-            onClick={() => {
-              account.logout();
-              navigate("/login");
-            }}
-            cursor={"pointer"}
-            _hover={{ bgColor: "gray.200" }}
-            colorScheme="teal"
-          >
-            로그아웃
-          </Button>
-        )}
-      </ButtonGroup>
+      <Center>
+        <ButtonGroup gap="1">
+          {account.isLoggedIn() || (
+            <Button
+              onClick={() => navigate("/signup")}
+              cursor={"pointer"}
+              _hover={{ bgColor: "gray.200" }}
+              colorScheme="gray"
+              p={6}
+              fontSize={20}
+              fontWeight={600}
+            >
+              회원가입
+            </Button>
+          )}
+          {account.isLoggedIn() || (
+            <Button
+              onClick={() => navigate("/login")}
+              cursor={"pointer"}
+              _hover={{ bgColor: "gray.200" }}
+              colorScheme="gray"
+              p={6}
+              fontSize={20}
+              fontWeight={600}
+            >
+              로그인
+            </Button>
+          )}
+          {account.isLoggedIn() && (
+            <Button
+              onClick={() => {
+                account.logout();
+                navigate("/login");
+              }}
+              cursor={"pointer"}
+              _hover={{ bgColor: "gray.200" }}
+              colorScheme="gray"
+              p={4}
+              fontSize={20}
+              fontWeight={600}
+            >
+              로그아웃
+            </Button>
+          )}
+        </ButtonGroup>
+      </Center>
     </Flex>
   );
 }
