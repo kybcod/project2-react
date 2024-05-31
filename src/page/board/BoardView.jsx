@@ -189,6 +189,10 @@ export function BoardView() {
             <Input type={"datetime-local"} value={board.inserted} readOnly />
           </FormControl>
         </Box>
+        <Box>
+          {/*<Button onClick={handleClickPre}>이전 글</Button>*/}
+          {/*<Button onClick={handleClickPre}>다음 글</Button>*/}
+        </Box>
         {account.hasAccess(board.memberId) && (
           <Flex mb={7} gap={2}>
             <Box mt={"30px"}>
