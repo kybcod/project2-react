@@ -5,6 +5,10 @@ import {
   Badge,
   Box,
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Center,
   Flex,
   FormControl,
@@ -20,6 +24,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Stack,
+  StackDivider,
   Switch,
   Text,
   Textarea,
@@ -99,120 +105,150 @@ export function BoardEdit() {
       }
     }
     fileNameList.push(
-      <li>
-        {addFile.name}
-        {duplicate && (
-          <Badge ml={"10px"} colorScheme={"red"}>
-            override
-          </Badge>
-        )}
-      </li>,
+      <Flex>
+        <Text fontSize={"md"} mr={3}>
+          {addFile.name}
+        </Text>
+        <Box>
+          {duplicate && (
+            <Badge ml={"10px"} colorScheme={"red"}>
+              override
+            </Badge>
+          )}
+        </Box>
+      </Flex>,
     );
   }
 
   return (
     <Box>
-      <Box mb={10}>
-        <Heading>{board.id}번 게시물 수정</Heading>
-      </Box>
-      <Box>
-        <Box mb={7}>
-          <FormControl>
-            <FormLabel>제목</FormLabel>
-            <Input
-              defaultValue={board.title}
-              onChange={(e) => setBoard({ ...board, title: e.target.value })}
-            />
-          </FormControl>
-        </Box>
-        <Box mb={7}>
-          <FormControl>
-            <FormLabel>본문</FormLabel>
-            <Textarea
-              defaultValue={board.content}
-              onChange={(e) => setBoard({ ...board, content: e.target.value })}
-            ></Textarea>
-          </FormControl>
-        </Box>
-        <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
-          {board.fileList &&
-            board.fileList.map((file) => (
-              <Box
-                boxSize={"220px"}
-                border={"2px solid black"}
-                m={3}
-                key={file.name}
-              >
-                <Center>
-                  <Box>
-                    <Flex>
-                      <FontAwesomeIcon icon={faTrashCan} />
-                      <Switch
-                        ml="10px"
-                        onChange={(e) =>
-                          handleRemoveSwitchChange(file.name, e.target.checked)
+      <Center>
+        <Box w={500}>
+          <Box mb={10}>
+            <Heading>회원 정보 수정</Heading>
+          </Box>
+          <Box mb={10}>
+            <Heading>{board.id}번 게시물 수정</Heading>
+          </Box>
+          <Box>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>제목</FormLabel>
+                <Input
+                  defaultValue={board.title}
+                  onChange={(e) =>
+                    setBoard({ ...board, title: e.target.value })
+                  }
+                />
+              </FormControl>
+            </Box>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>본문</FormLabel>
+                <Textarea
+                  defaultValue={board.content}
+                  onChange={(e) =>
+                    setBoard({ ...board, content: e.target.value })
+                  }
+                ></Textarea>
+              </FormControl>
+            </Box>
+            <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
+              {board.fileList &&
+                board.fileList.map((file) => (
+                  <Card boxSize={"220px"} m={3} key={file.name}>
+                    <CardFooter>
+                      <Flex gap={3}>
+                        <Box>
+                          <FontAwesomeIcon color={"red"} icon={faTrashCan} />
+                        </Box>
+                        <Box>
+                          <Switch
+                            ml="10px"
+                            onChange={(e) =>
+                              handleRemoveSwitchChange(
+                                file.name,
+                                e.target.checked,
+                              )
+                            }
+                          />
+                        </Box>
+                        <Box>
+                          <Text ml="10px">{file.name}</Text>
+                        </Box>
+                      </Flex>
+                    </CardFooter>
+                    <CardBody>
+                      <Image
+                        sx={
+                          removeFileList.includes(file.name)
+                            ? { filter: "blur(5px)" }
+                            : {}
                         }
+                        borderRadius={"full"}
+                        boxSize={"180px"}
+                        src={file.src}
                       />
-                      <Text ml="10px">{file.name}</Text>
-                    </Flex>
-                  </Box>
-                </Center>
-                <Center>
-                  <Box>
-                    <Image
-                      sx={
-                        removeFileList.includes(file.name)
-                          ? { filter: "blur(5px)" }
-                          : {}
-                      }
-                      borderRadius={"full"}
-                      boxSize={"180px"}
-                      src={file.src}
-                    />
-                  </Box>
-                </Center>
-              </Box>
-            ))}
-        </Box>
+                    </CardBody>
+                  </Card>
+                ))}
+            </Box>
 
-        <Box mb={7}>
-          <FormControl>
-            <FormLabel>파일</FormLabel>
-            <Input
-              multiple={true}
-              type={"file"}
-              accept={"image/*"}
-              onChange={(e) => {
-                setAddFileList(e.target.files);
-              }}
-            />
-            <FormHelperText color={"red"}>
-              총 용량은 10MB 한 파일은 1MB를 초과할 수 없습니다.
-            </FormHelperText>
-          </FormControl>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>파일</FormLabel>
+                <Input
+                  multiple={true}
+                  type={"file"}
+                  accept={"image/*"}
+                  onChange={(e) => {
+                    setAddFileList(e.target.files);
+                  }}
+                />
+                <FormHelperText color={"red"}>
+                  총 용량은 10MB 한 파일은 1MB를 초과할 수 없습니다.
+                </FormHelperText>
+              </FormControl>
+            </Box>
+            <Box>
+              {fileNameList.length > 0 && (
+                <Box mb={7}>
+                  <Card>
+                    <CardHeader>
+                      <Heading size="md">선택된 파일 목록</Heading>
+                    </CardHeader>
+                    <CardBody>
+                      <Stack divider={<StackDivider />} spacing={4}>
+                        {fileNameList}
+                      </Stack>
+                    </CardBody>
+                  </Card>
+                </Box>
+              )}
+            </Box>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>작성자</FormLabel>
+                <Input defaultValue={board.writer} readOnly />
+              </FormControl>
+            </Box>
+            <Box mb={7}>
+              <Button w={"100px"} colorScheme={"green"} onClick={onOpen}>
+                저장
+              </Button>
+            </Box>
+          </Box>
         </Box>
-        <Box>
-          <ul>{fileNameList}</ul>
-        </Box>
-        <Box mb={7}>
-          <FormControl>
-            <FormLabel>작성자</FormLabel>
-            <Input defaultValue={board.writer} readOnly />
-          </FormControl>
-        </Box>
-        <Box mb={7}>
-          <Button w={"100px"} colorScheme={"green"} onClick={onOpen}>
-            저장
-          </Button>
-        </Box>
-      </Box>
+      </Center>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader></ModalHeader>
           <ModalBody>저장하시겠습니까?</ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>취소</Button>
+            <Button mr={2} onClick={onClose}>
+              취소
+            </Button>
             <Button onClick={handleClickSave} colorScheme={"blue"}>
               확인
             </Button>

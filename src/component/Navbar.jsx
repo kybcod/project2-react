@@ -52,15 +52,6 @@ export function Navbar() {
           글쓰기
         </Center>
       )}
-      {account.isAdmin() && (
-        <Center
-          onClick={() => navigate("/member/list")}
-          cursor={"pointer"}
-          _hover={{ bgColor: "blue.300" }}
-        >
-          회원목록
-        </Center>
-      )}
 
       <Spacer />
       {/*아이콘 */}
@@ -75,6 +66,19 @@ export function Navbar() {
         >
           <FontAwesomeIcon icon={faUser} />
           {account.nickName}
+        </Center>
+      )}
+
+      {account.isAdmin() && (
+        <Center
+          onClick={() => navigate("/member/list")}
+          cursor={"pointer"}
+          _hover={{ bgColor: "blue.300" }}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
+        >
+          회원목록
         </Center>
       )}
 

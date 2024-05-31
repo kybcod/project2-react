@@ -1,8 +1,10 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   Modal,
   ModalBody,
@@ -98,41 +100,49 @@ export function MemberView() {
   }
 
   return (
-    <Box mt={"30px"}>
-      <Box>{member.id}번 회원</Box>
-      <Box mt={"30px"}>
-        <FormControl>
-          <FormLabel>이메일</FormLabel>
-          <Input value={member.email} readOnly />
-        </FormControl>
-      </Box>
-      <Box mt={"30px"}>
-        <FormControl>
-          <FormLabel>닉네임</FormLabel>
-          <Input value={member.nickName} readOnly />
-        </FormControl>
-      </Box>
-      <Box mt={"30px"}>
-        <FormControl>
-          <FormLabel>가입일시</FormLabel>
-          <Input value={member.inserted} readOnly />
-        </FormControl>
-      </Box>
+    <Box>
+      <Center>
+        <Box w={500}>
+          <Box mb={10}>
+            <Heading>회원 정보</Heading>
+          </Box>
+          <Box mb={10}>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>이메일</FormLabel>
+                <Input value={member.email} readOnly />
+              </FormControl>
+            </Box>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>닉네임</FormLabel>
+                <Input value={member.nickName} readOnly />
+              </FormControl>
+            </Box>
+            <Box mb={7}>
+              <FormControl>
+                <FormLabel>가입일시</FormLabel>
+                <Input value={member.inserted} readOnly />
+              </FormControl>
+            </Box>
 
-      {account.hasAccess(member.id) && (
-        <Box mt={"30px"}>
-          <Button
-            ml={"10px"}
-            onClick={() => navigate(`/member/edit/${member.id}`)}
-            colorScheme={"green"}
-          >
-            수정
-          </Button>
-          <Button ml={"10px"} onClick={onOpen} colorScheme={"red"}>
-            탈퇴
-          </Button>
+            {account.hasAccess(member.id) && (
+              <Box>
+                <Button
+                  mr={2}
+                  onClick={() => navigate(`/member/edit/${member.id}`)}
+                  colorScheme={"green"}
+                >
+                  수정
+                </Button>
+                <Button ml={"10px"} onClick={onOpen} colorScheme={"red"}>
+                  탈퇴
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Box>
-      )}
+      </Center>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -148,13 +158,18 @@ export function MemberView() {
           </ModalBody>
           <ModalFooter>
             <Button
+              mr={2}
               isLoading={isLoading}
               colorScheme={"red"}
               onClick={handleDeleteClick}
             >
               탈퇴
             </Button>
-            <Button colorScheme={"blue"} onClick={onClose}>
+            <Button
+              isLoading={isLoading}
+              colorScheme={"blue"}
+              onClick={onClose}
+            >
               취소
             </Button>
           </ModalFooter>
