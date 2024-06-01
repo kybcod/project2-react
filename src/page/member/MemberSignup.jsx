@@ -28,7 +28,7 @@ export function MemberSignup() {
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [file, setFile] = useState([]);
-  const [filePreview, setFilePreview] = useState("/img/original_profile.jpg");
+  const [filePreview, setFilePreview] = useState("/img/profile.jpg");
 
   function handleMemberSaveClick() {
     setIsLoading(true);

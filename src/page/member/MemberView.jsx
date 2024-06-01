@@ -5,6 +5,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -28,6 +29,7 @@ export function MemberView() {
   const [member, setMember] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
+
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -35,11 +37,7 @@ export function MemberView() {
 
   useEffect(() => {
     axios
-      .get(`/api/member/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .get(`/api/member/${id}`)
       .then((response) => {
         setMember(response.data);
       })
@@ -105,6 +103,14 @@ export function MemberView() {
         <Box w={500}>
           <Box mb={10}>
             <Heading>회원 정보</Heading>
+          </Box>
+          <Box>
+            <Box mb={7}>
+              <Box mt={"30px"}>
+                <Box>프로필 사진</Box>
+                <Image boxSize={"180px"} src={member.awsProfile} />
+              </Box>
+            </Box>
           </Box>
           <Box mb={10}>
             <Box mb={7}>

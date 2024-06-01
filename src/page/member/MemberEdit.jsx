@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
@@ -28,6 +29,9 @@ export function MemberEdit() {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
+  const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
+
   const account = useContext(LoginContext);
   const { id } = useParams();
   const toast = useToast();
@@ -41,6 +45,7 @@ export function MemberEdit() {
         const member1 = res.data;
         setMember({ ...member1, password: "" });
         setOldNickName(member1.nickName);
+        setFilePreview(member1.awsProfile);
       })
       .catch(() => {
         toast({
@@ -54,7 +59,7 @@ export function MemberEdit() {
 
   function handleClickSave() {
     axios
-      .put("/api/member/modify", { ...member, oldPassword })
+      .putForm("/api/member/modify", { file: file, ...member, oldPassword })
       .then((res) => {
         toast({
           status: "success",
@@ -131,11 +136,37 @@ export function MemberEdit() {
       })
       .finally();
   }
+  function handleChangeProFile(e) {
+    console.log(e.target.files);
+    const fileView = e.target.files[0];
+    setFile(fileView);
+    if (fileView) {
+      setFilePreview(URL.createObjectURL(fileView));
+    } else {
+      setFilePreview(member.awsProfile);
+    }
+  }
 
   return (
     <Box>
       <Box>회원 정보 수정</Box>
       <Box>
+        <Box>
+          <Box mb={7}>
+            <FormControl>
+              <FormLabel>프로필 사진</FormLabel>
+              <Box mt={"30px"}>
+                <Image boxSize={"180px"} src={filePreview} />
+              </Box>
+              <Input
+                mt={"10px"}
+                type={"file"}
+                accept={"image/*"}
+                onChange={handleChangeProFile}
+              />
+            </FormControl>
+          </Box>
+        </Box>
         <Box>
           <FormControl>
             <FormLabel>이메일</FormLabel>
