@@ -33,6 +33,8 @@ import { CommentComponent } from "../../component/Comment/CommentComponent.jsx";
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const [pre, setPre] = useState(null);
+  const [next, setNext] = useState(null);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -188,10 +190,6 @@ export function BoardView() {
             <FormLabel>작성일시</FormLabel>
             <Input type={"datetime-local"} value={board.inserted} readOnly />
           </FormControl>
-        </Box>
-        <Box>
-          {/*<Button onClick={handleClickPre}>이전 글</Button>*/}
-          {/*<Button onClick={handleClickPre}>다음 글</Button>*/}
         </Box>
         {account.hasAccess(board.memberId) && (
           <Flex mb={7} gap={2}>
