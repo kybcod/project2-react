@@ -175,10 +175,11 @@ export function BoardList() {
             {/*만약 이전 버튼이 보이면 처음 버튼도 보인다. */}
             {pageInfo.prevPageNumber && (
               <>
-                <Button onClick={() => handlePageButtonClick(1)}>
+                <Button mr={"10px"} onClick={() => handlePageButtonClick(1)}>
                   <FontAwesomeIcon icon={faAnglesLeft} />
                 </Button>
                 <Button
+                  mr={"10px"}
                   onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
                 >
                   <FontAwesomeIcon icon={faAngleLeft} />
@@ -204,6 +205,7 @@ export function BoardList() {
             {pageInfo.nextPageNumber && (
               <>
                 <Button
+                  mr={"10px"}
                   onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
                 >
                   <FontAwesomeIcon icon={faAngleRight} />

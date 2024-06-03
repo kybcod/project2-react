@@ -44,7 +44,7 @@ export function Navbar() {
         onClick={() => navigate("/")}
         cursor={"pointer"}
         _hover={{ bgColor: "blue.300" }}
-        p={8}
+        p={6}
         fontSize={20}
         fontWeight={600}
       >
@@ -64,7 +64,7 @@ export function Navbar() {
           onClick={() => navigate("/write")}
           cursor={"pointer"}
           _hover={{ bgColor: "blue.300" }}
-          p={8}
+          p={6}
           fontSize={20}
           fontWeight={600}
         >
@@ -82,7 +82,7 @@ export function Navbar() {
           onClick={() => navigate(`/member/${account.id}`)}
           cursor={"pointer"}
           _hover={{ bgColor: "blue.300" }}
-          p={8}
+          p={6}
           fontSize={20}
           fontWeight={600}
         >
@@ -147,7 +147,7 @@ export function Navbar() {
               cursor={"pointer"}
               _hover={{ bgColor: "blue.300" }}
               colorScheme="gray"
-              p={4}
+              p={6}
               fontSize={20}
               fontWeight={600}
             >

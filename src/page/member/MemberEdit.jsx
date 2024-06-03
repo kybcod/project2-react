@@ -1,9 +1,12 @@
 import {
   Box,
   Button,
+  Center,
+  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Image,
   Input,
   InputGroup,
@@ -137,116 +140,145 @@ export function MemberEdit() {
       .finally();
   }
   function handleChangeProFile(e) {
-    console.log(e.target.files);
     const fileView = e.target.files[0];
-    setFile(fileView);
+    setFile(fileView); //선택한 파일을 File에 업데이트
     if (fileView) {
-      setFilePreview(URL.createObjectURL(fileView));
+      setFilePreview(URL.createObjectURL(fileView)); //있으면 미리 보기
     } else {
-      setFilePreview(member.awsProfile);
+      setFilePreview(member.awsProfile); //없으면 원래대로
     }
+  }
+
+  function handleOriginalProfile() {
+    // 버튼을 클릭하면 기폰 프로필로 전환되어 화면에 보이고 file을 넘겨줄 때는 null로 넘겨주는 것
+    setFile(null);
+    setFilePreview("/img/profile.jpg");
   }
 
   return (
     <Box>
-      <Box>회원 정보 수정</Box>
-      <Box>
-        <Box>
-          <Box mb={7}>
-            <FormControl>
-              <FormLabel>프로필 사진</FormLabel>
-              <Box mt={"30px"}>
-                <Image boxSize={"180px"} src={filePreview} />
+      <Center>
+        <Box w={500}>
+          <Box mb={10}>
+            <Heading>회원 정보 수정</Heading>
+          </Box>
+          <Box>
+            <Box mb={7}>
+              <Box mb={7}>
+                <FormControl>
+                  <FormLabel>프로필 사진</FormLabel>
+                  <Box mt={"30px"}>
+                    <Flex alignItems="flex-end">
+                      <Image boxSize={"180px"} src={filePreview} />
+                      <Button
+                        onClick={handleOriginalProfile}
+                        bottom={1}
+                        left={3}
+                        right={0}
+                        colorScheme="green"
+                      >
+                        기본 프로필 전환
+                      </Button>
+                    </Flex>
+                  </Box>
+                  <Input
+                    mt={"10px"}
+                    type={"file"}
+                    accept={"image/*"}
+                    onChange={handleChangeProFile}
+                  />
+                </FormControl>
               </Box>
-              <Input
-                mt={"10px"}
-                type={"file"}
-                accept={"image/*"}
-                onChange={handleChangeProFile}
-              />
-            </FormControl>
+            </Box>
+            <Box mb={10}>
+              <Box mb={7}>
+                <FormControl>
+                  <FormLabel>이메일</FormLabel>
+                  <Input readOnly value={member.email} />
+                </FormControl>
+              </Box>
+              <Box mb={7}>
+                <FormControl>
+                  <FormLabel>암호</FormLabel>
+                  <Input
+                    onChange={(e) =>
+                      setMember({ ...member, password: e.target.value })
+                    }
+                    placeholder={"암호를 변경하려면 입력하세요"}
+                  />
+                  <FormHelperText color={"green"}>
+                    입력하지 않으면 기존 암호를 변경하지 않습니다.
+                  </FormHelperText>
+                </FormControl>
+              </Box>
+              <Box mb={7}>
+                <FormControl>
+                  <FormLabel>암호 확인</FormLabel>
+                  <Input onChange={(e) => setPasswordCheck(e.target.value)} />
+                  {member.password === passwordCheck || (
+                    <FormHelperText color={"red"}>
+                      암호가 일치하지 않습니다.
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Box>
+              <Box mb={7}>
+                <FormControl>닉네임</FormControl>
+                <InputGroup>
+                  <Input
+                    onChange={(e) => {
+                      const newNickName = e.target.value.trim();
+                      setMember({ ...member, nickName: newNickName });
+                      setIsCheckedNickName(newNickName === oldNickName);
+                    }}
+                    value={member.nickName}
+                  />
+                  <InputRightElement w={"75px"} mr={1}>
+                    <Button
+                      colorScheme={"green"}
+                      isDisabled={isDisableNickNameCheckButton}
+                      size={"sm"}
+                      onClick={handleCheckNickName}
+                    >
+                      중복확인
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+              <Box>
+                <Button
+                  w={"100px"}
+                  isDisabled={isDisableSaveButton}
+                  onClick={onOpen}
+                  colorScheme={"blue"}
+                >
+                  저장
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </Box>
-        <Box>
-          <FormControl>
-            <FormLabel>이메일</FormLabel>
-            <Input readOnly value={member.email} />
-          </FormControl>
-        </Box>
-        <Box>
-          <FormControl>
-            <FormLabel>암호</FormLabel>
-            <Input
-              onChange={(e) =>
-                setMember({ ...member, password: e.target.value })
-              }
-              placeholder={"암호를 변경하려면 입력하세요"}
-            />
-            <FormHelperText>
-              입력하지 않으면 기존 암호를 변경하지 않습니다.
-            </FormHelperText>
-          </FormControl>
-        </Box>
-        <Box>
-          <FormControl>
-            <FormLabel>암호 확인</FormLabel>
-            <Input onChange={(e) => setPasswordCheck(e.target.value)} />
-            {member.password === passwordCheck || (
-              <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
-            )}
-          </FormControl>
-        </Box>
-        <Box>
-          <FormControl>별명</FormControl>
-          <InputGroup>
-            <Input
-              onChange={(e) => {
-                const newNickName = e.target.value.trim();
-                setMember({ ...member, nickName: newNickName });
-                setIsCheckedNickName(newNickName === oldNickName);
-              }}
-              value={member.nickName}
-            />
-            <InputRightElement w={"75px"} mr={1}>
-              <Button
-                colorScheme={"green"}
-                isDisabled={isDisableNickNameCheckButton}
-                size={"sm"}
-                onClick={handleCheckNickName}
-              >
-                중복확인
+      </Center>
+      <Box>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>기존 암호 확인</ModalHeader>
+            <ModalBody>
+              <FormControl>
+                <FormLabel>기존 암호</FormLabel>
+                <Input onChange={(e) => setOldPassword(e.target.value)} />
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={onClose}>취소</Button>
+              <Button colorScheme="blue" onClick={handleClickSave}>
+                확인
               </Button>
-            </InputRightElement>
-          </InputGroup>
-        </Box>
-        <Box>
-          <Button
-            isDisabled={isDisableSaveButton}
-            onClick={onOpen}
-            colorScheme={"blue"}
-          >
-            저장
-          </Button>
-        </Box>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>기존 암호 확인</ModalHeader>
-          <ModalBody>
-            <FormControl>
-              <FormLabel>기존 암호</FormLabel>
-              <Input onChange={(e) => setOldPassword(e.target.value)} />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>취소</Button>
-            <Button colorScheme="blue" onClick={handleClickSave}>
-              확인
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 }

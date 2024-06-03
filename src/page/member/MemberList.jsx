@@ -17,6 +17,13 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function MemberList() {
   const [memberList, setMemberList] = useState([]);
@@ -134,18 +141,20 @@ export function MemberList() {
             {memberPageInfo.prevPage && (
               <>
                 <Button
+                  mr={"10px"}
                   onClick={() => {
                     handlePageClick(1);
                   }}
                 >
-                  처음
+                  <FontAwesomeIcon icon={faAnglesLeft} />
                 </Button>
                 <Button
+                  mr={"10px"}
                   onClick={() => {
                     handlePageClick(memberPageInfo.prevPage);
                   }}
                 >
-                  이전
+                  <FontAwesomeIcon icon={faAngleLeft} />
                 </Button>
               </>
             )}
@@ -168,18 +177,19 @@ export function MemberList() {
             {memberPageInfo.nextPage && (
               <>
                 <Button
+                  mr={"10px"}
                   onClick={() => {
                     handlePageClick(memberPageInfo.nextPage);
                   }}
                 >
-                  다음
+                  <FontAwesomeIcon icon={faAngleRight} />
                 </Button>
                 <Button
                   onClick={() => {
                     handlePageClick(memberPageInfo.lastPage);
                   }}
                 >
-                  맨끝
+                  <FontAwesomeIcon icon={faAnglesRight} />
                 </Button>
               </>
             )}

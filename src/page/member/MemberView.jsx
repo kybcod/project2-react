@@ -106,8 +106,8 @@ export function MemberView() {
           </Box>
           <Box>
             <Box mb={7}>
-              <Box mt={"30px"}>
-                <Box>프로필 사진</Box>
+              <Box mb={7}>
+                <Box mb={3}>프로필 사진</Box>
                 <Image boxSize={"180px"} src={member.awsProfile} />
               </Box>
             </Box>
@@ -135,13 +135,14 @@ export function MemberView() {
             {account.hasAccess(member.id) && (
               <Box>
                 <Button
-                  mr={2}
+                  w={"100px"}
+                  mr={5}
                   onClick={() => navigate(`/member/edit/${member.id}`)}
                   colorScheme={"green"}
                 >
                   수정
                 </Button>
-                <Button ml={"10px"} onClick={onOpen} colorScheme={"red"}>
+                <Button w={"100px"} onClick={onOpen} colorScheme={"red"}>
                   탈퇴
                 </Button>
               </Box>
@@ -169,7 +170,7 @@ export function MemberView() {
               colorScheme={"red"}
               onClick={handleDeleteClick}
             >
-              탈퇴
+              확인
             </Button>
             <Button
               isLoading={isLoading}

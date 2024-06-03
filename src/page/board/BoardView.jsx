@@ -168,7 +168,7 @@ export function BoardView() {
           <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
             {board.fileList &&
               board.fileList.map((file) => (
-                <Card boxSize={"190px"} m={3} key={file.name}>
+                <Card m={3} key={file.name}>
                   <CardBody>
                     <Image w={"100%"} boxSize={"180px"} src={file.src} />
                   </CardBody>
@@ -197,12 +197,14 @@ export function BoardView() {
           <Flex mb={7} gap={2}>
             <Box mt={"30px"}>
               <Button
+                w={"100px"}
+                mr={5}
                 colorScheme={"purple"}
                 onClick={() => navigate(`/edit/${board.id}`)}
               >
                 수정
               </Button>
-              <Button colorScheme={"red"} onClick={onOpen}>
+              <Button w={"100px"} colorScheme={"red"} onClick={onOpen}>
                 삭제
               </Button>
             </Box>
