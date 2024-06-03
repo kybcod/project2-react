@@ -156,7 +156,7 @@ export function BoardEdit() {
             <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
               {board.fileList &&
                 board.fileList.map((file) => (
-                  <Card boxSize={"220px"} m={3} key={file.name}>
+                  <Card m={3} key={file.name}>
                     <CardFooter>
                       <Flex gap={3}>
                         <Box>

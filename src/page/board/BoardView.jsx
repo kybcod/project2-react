@@ -33,8 +33,6 @@ import { CommentComponent } from "../../component/Comment/CommentComponent.jsx";
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
-  const [pre, setPre] = useState(null);
-  const [next, setNext] = useState(null);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -156,10 +154,12 @@ export function BoardView() {
       </Box>
 
       <Box mb={7}>
-        <FormControl>
-          <FormLabel>제목</FormLabel>
-          <Input value={board.title} readOnly />
-        </FormControl>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>제목</FormLabel>
+            <Input value={board.title} readOnly />
+          </FormControl>
+        </Box>
         <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
@@ -170,7 +170,7 @@ export function BoardView() {
           <Box display={"flex"} flexWrap={"wrap"} mt={"30px"}>
             {board.fileList &&
               board.fileList.map((file) => (
-                <Card boxSize={"190px"} m={3} key={file.name}>
+                <Card m={3} key={file.name}>
                   <CardBody>
                     <Image w={"100%"} boxSize={"180px"} src={file.src} />
                   </CardBody>
