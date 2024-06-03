@@ -154,10 +154,12 @@ export function BoardView() {
       </Box>
 
       <Box mb={7}>
-        <FormControl>
-          <FormLabel>제목</FormLabel>
-          <Input value={board.title} readOnly />
-        </FormControl>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>제목</FormLabel>
+            <Input value={board.title} readOnly />
+          </FormControl>
+        </Box>
         <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
@@ -188,10 +190,6 @@ export function BoardView() {
             <FormLabel>작성일시</FormLabel>
             <Input type={"datetime-local"} value={board.inserted} readOnly />
           </FormControl>
-        </Box>
-        <Box>
-          {/*<Button onClick={handleClickPre}>이전 글</Button>*/}
-          {/*<Button onClick={handleClickPre}>다음 글</Button>*/}
         </Box>
         {account.hasAccess(board.memberId) && (
           <Flex mb={7} gap={2}>

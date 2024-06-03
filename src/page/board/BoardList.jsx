@@ -113,7 +113,7 @@ export function BoardList() {
                           <Box>
                             <FontAwesomeIcon icon={faImages} />
                           </Box>
-                          <Box>{board.numberOfImages}</Box>
+                          <Box color={"green"}>({board.numberOfImages})</Box>
                         </Flex>
                       </Badge>
                     )}
@@ -123,7 +123,7 @@ export function BoardList() {
                           <Box>
                             <FontAwesomeIcon icon={faComments} />
                           </Box>
-                          <Box>{board.numberOfComment}</Box>
+                          <Box color={"green"}>({board.numberOfComment})</Box>
                         </Flex>
                       </Badge>
                     )}
