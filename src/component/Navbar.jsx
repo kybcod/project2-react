@@ -74,6 +74,16 @@ export function Navbar() {
           <Hide below={"lg"}>글쓰기</Hide>
         </Center>
       )}
+      <Center
+        onClick={() => navigate("/product")}
+        cursor={"pointer"}
+        _hover={{ bgColor: "blue.300" }}
+        p={6}
+        fontSize={20}
+        fontWeight={600}
+      >
+        <Box>상품 목록</Box>
+      </Center>
 
       <Spacer />
       {/*아이콘 */}

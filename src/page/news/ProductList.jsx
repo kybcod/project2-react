@@ -21,7 +21,12 @@ export function ProductList() {
           {productList.map((product) => (
             <Tr key={product.title}>
               <Td onClick={() => (window.location.href = product.url)}>
-                <Image src={product.image} />
+                <Image
+                  border={"1px solid black"}
+                  w={"100px"}
+                  h={"100px"}
+                  src={product.image}
+                />
               </Td>
               <Td>{product.title}</Td>
             </Tr>
