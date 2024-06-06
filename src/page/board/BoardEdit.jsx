@@ -218,7 +218,7 @@ export function BoardEdit() {
                       <Heading size="md">선택된 파일 목록</Heading>
                     </CardHeader>
                     <CardBody>
-                      <Stack divider={<StackDivider />} spacing={4}>
+                      <Stack divider={<StackDivider />} spacing={3}>
                         {fileNameList}
                       </Stack>
                     </CardBody>
